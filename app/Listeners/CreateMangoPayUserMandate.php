@@ -68,26 +68,26 @@ class CreateMangoPayUserMandate
             });
         } catch (\MangoPay\Libraries\ResponseException $e) {
 
-            return redirect('users/'.$user->id.'/paymentInfo')->with('errors', 'Merci de saisir un IBAN valide.');
+            return redirect('users/paymentInfo')->with('errors', 'Merci de saisir un IBAN valide.');
             // \MangoPay\Libraries\Logs::Debug('MangoPay\ResponseException Code', $e->GetCode());
             // \MangoPay\Libraries\Logs::Debug('Message', $e->GetMessage());
             // \MangoPay\Libraries\Logs::Debug('Details', $e->GetErrorDetails());
 
         } catch (\MangoPay\Libraries\Exception $e) {
 
-            return redirect('users/'.$user->id.'/paymentInfo')->with('errors', 'Merci de saisir un IBAN valide.');
+            return redirect('users/paymentInfo')->with('errors', 'Merci de saisir un IBAN valide.');
             // \MangoPay\Libraries\Logs::Debug('MangoPay\Exception Message', $e->GetMessage());
 
         } catch (MangoPay\Libraries\ResponseException $e) {
 
-            return redirect('users/'.$user->id.'/paymentInfo')->with('errors', 'Merci de saisir un IBAN valide.');
+            return redirect('users/paymentInfo')->with('errors', 'Merci de saisir un IBAN valide.');
             // \MangoPay\Libraries\Logs::Debug('MangoPay\ResponseException Code', $e->GetCode());
             // \MangoPay\Libraries\Logs::Debug('Message', $e->GetMessage());
             // \MangoPay\Libraries\Logs::Debug('Details', $e->GetErrorDetails());
 
         } catch (MangoPay\Libraries\Exception $e) {
 
-            return redirect('users/'.$user->id.'/paymentInfo')->with('errors', 'Merci de saisir un IBAN valide.');
+            return redirect('users/paymentInfo')->with('errors', 'Merci de saisir un IBAN valide.');
             // \MangoPay\Libraries\Logs::Debug('MangoPay\Exception Message', $e->GetMessage());
         }
     }

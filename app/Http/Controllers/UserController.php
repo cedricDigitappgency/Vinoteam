@@ -320,10 +320,9 @@ class UserController extends Controller
 
       $data = $request->only('payment_iban1', 'payment_iban2', 'payment_iban3', 'payment_iban4', 'payment_iban5', 'payment_iban6', 'payment_iban7', 'payment_bic');
 
-      $result = $user->update([
-        'payment_iban' => $data['payment_iban1'].$data['payment_iban2'].$data['payment_iban3'].$data['payment_iban4'].$data['payment_iban5'].$data['payment_iban6'].$data['payment_iban7'],
-        'payment_bic' => $data['payment_bic']
-        ]);
+      $user->payment_iban = $data['payment_iban1'].$data['payment_iban2'].$data['payment_iban3'].$data['payment_iban4'].$data['payment_iban5'].$data['payment_iban6'].$data['payment_iban7'];
+      $user->payment_bic = $data['payment_bic'];
+      $user->save();
 
       // Mettre à jour les infos
       Event::fire(new PaymentInfoWereModified($user->id));

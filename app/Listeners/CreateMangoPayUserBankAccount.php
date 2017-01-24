@@ -52,33 +52,33 @@ class CreateMangoPayUserBankAccount
             $bankAccount->Details->IBAN = $user->payment_iban;
             $bankAccount->Details->BIC = $user->payment_bic;
 
-            $result = @$this->mangopay->Users->CreateBankAccount($user->mangopay_userid, $bankAccount);
+            $result = $this->mangopay->Users->CreateBankAccount($user->mangopay_userid, $bankAccount);
 
             // update user info
             $this->users->updateMangoPayBankAccountId($event->userId, $result->Id);
 
         } catch (\MangoPay\Libraries\ResponseException $e) {
 
-            return redirect('users/'.$user->id.'/paymentInfo')->with('errors', 'Merci de saisir un IBAN valide.');
+            return redirect('users/paymentInfo')->with('errors', 'Merci de saisir un IBAN valide.');
             // \MangoPay\Libraries\Logs::Debug('MangoPay\ResponseException Code', $e->GetCode());
             // \MangoPay\Libraries\Logs::Debug('Message', $e->GetMessage());
             // \MangoPay\Libraries\Logs::Debug('Details', $e->GetErrorDetails());
 
         } catch (\MangoPay\Libraries\Exception $e) {
 
-            return redirect('users/'.$user->id.'/paymentInfo')->with('errors', 'Merci de saisir un IBAN valide.');
+            return redirect('users/paymentInfo')->with('errors', 'Merci de saisir un IBAN valide.');
             // \MangoPay\Libraries\Logs::Debug('MangoPay\Exception Message', $e->GetMessage());
 
         } catch (MangoPay\Libraries\ResponseException $e) {
 
-            return redirect('users/'.$user->id.'/paymentInfo')->with('errors', 'Merci de saisir un IBAN valide.');
+            return redirect('users/paymentInfo')->with('errors', 'Merci de saisir un IBAN valide.');
             // \MangoPay\Libraries\Logs::Debug('MangoPay\ResponseException Code', $e->GetCode());
             // \MangoPay\Libraries\Logs::Debug('Message', $e->GetMessage());
             // \MangoPay\Libraries\Logs::Debug('Details', $e->GetErrorDetails());
 
         } catch (MangoPay\Libraries\Exception $e) {
 
-            return redirect('users/'.$user->id.'/paymentInfo')->with('errors', 'Merci de saisir un IBAN valide.');
+            return redirect('users/paymentInfo')->with('errors', 'Merci de saisir un IBAN valide.');
             // \MangoPay\Libraries\Logs::Debug('MangoPay\Exception Message', $e->GetMessage());
         }
     }
