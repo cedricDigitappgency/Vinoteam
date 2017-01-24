@@ -1,0 +1,90 @@
+<!-- Modal -->
+<div class="modal fade" id="readWine" tabindex="-1" role="dialog" aria-labelledby="readWineLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="readWineLabel">Fiche de vin</h4>
+      </div>
+      <div class="modal-body">
+          
+        <div class="row">
+            <div id="file_show" class="col-md-12">
+                <div class="thumbnail text-center" style="margin:auto; width: 50%;">
+                    <img id="file_show_img" src="/images/bouteille-vinoteam.png" alt="">
+                </div>
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="form-group">
+                <div class="col-md-12">
+                    <div class="input-group input-group-xs">
+                        <span class="input-group-addon">
+                            <span class="icon glyphicon glyphicon-pencil"></span>
+                        </span>
+                        <input type="text" id="name_cru" name="name_cru" class="form-control ng-pristine ng-valid" autocomplete="off" placeholder="Nom du vin *" style="" readonly>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="form-group">
+                <div class="col-md-12">
+                    <div class="input-group input-group-xs">
+                        <span class="input-group-addon">
+                            <span class="icon glyphicon glyphicon-pencil"></span>
+                        </span>
+                        <input id="year" type="text" name="year" class="form-control ng-pristine ng-valid" autocomplete="off" placeholder="Année" style="" readonly>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="form-group">
+                <div class="col-md-12">
+                    <div class="input-group input-group-xs">
+                        <span class="input-group-addon">
+                            <span class="icon glyphicon glyphicon-pencil"></span>
+                        </span>
+                        <input id="productor" type="text" name="productor" class="form-control ng-pristine ng-valid" autocomplete="off" placeholder="Producteur" style="" readonly>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="form-group">
+                <div class="col-md-12">
+                    <div class="input-group input-group-xs">
+                        <span class="input-group-addon">
+                            <span class="icon glyphicon glyphicon-pencil"></span>
+                        </span>
+                        <input id="region" type="text" name="region" class="form-control ng-pristine ng-valid" autocomplete="off" placeholder="Région ou appelation" style="" readonly>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="form-group">
+                <div class="col-md-12">
+                    <div class="input-group input-group-xs">
+                        <span class="input-group-addon">
+                            <span class="icon glyphicon glyphicon-pencil"></span>
+                        </span>
+                        <textarea style="height:100px;" id="message" name="message" class="form-control ng-pristine ng-valid" autocomplete="off" placeholder="Message (facultatif)" style="" readonly></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div style="clear:both;"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Fermer</button>
+      </div>
+    </div>
+  </div>

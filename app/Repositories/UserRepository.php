@@ -1,0 +1,247 @@
+<?php
+
+namespace App\Repositories;
+
+use App\Http\Requests;
+use \Illuminate\Support\Facades\DB;
+
+class UserRepository
+{
+    /**
+     * Get the user.
+     *
+     * @param  integer $id
+     * @return Collection
+     */
+    public function showUser($id)
+    {
+        return $user = \App\User::find($id);
+
+    }
+    /**
+     * update the user.
+     *
+     * @param  array $request
+     * @return Collection
+     */
+    public function updateUser(Request $request)
+    {
+        $user = \App\User::find($request->id);
+
+        $user->firstname = $request->firstname;
+        $user->lastname = $request->lastname;
+        $user->email = $request->email;
+
+        if( $request->password != null )
+            $user->password = $request->password;
+
+        $user->birthday = $request->birthday;
+        $user->address = $request->address;
+        $user->address2 = $request->address2;
+        $user->city_id = $request->city_id;
+        $user->gender = $request->gender;
+        $user->phone = $request->phone;
+
+        $user->save();
+
+        return $user;
+
+    }
+
+    /**
+     * update the user payment info.
+     *
+     * @param  array $request
+     * @return Collection
+     */
+    public function updateUserPaymentInfo(Request $request)
+    {
+        $user = \App\User::find($request->id);
+
+        $user->payment_iban = $request->payment_iban;
+        $user->payment_bic = $request->payment_bic;
+
+        $user->save();
+
+        return $user;
+
+    }
+
+    /**
+     * get the user payment info.
+     *
+     * @param  integer $id
+     * @return Collection
+     */
+    public function getPaymentInfo($id)
+    {
+        $user = \App\User::find($id);
+
+        return [
+            'id' => $user->id,
+            'payment_iban' => $user->payment_iban,
+            'payment_bic' => $user->payment_bic
+        ];
+    }
+
+    /**
+     * update the user mangopay userid account.
+     *
+     * @param  int $id User Id
+     * @param  string $mangopay_walletid Wallet Id
+     * @return Collection
+     */
+    public function updateMangoPayUserId($id, $mangopay_userid)
+    {
+        $user = \App\User::find($id);
+
+        $user->mangopay_userid = $mangopay_userid;
+
+        $user->save();
+
+        return $user;
+    }
+
+    /**
+     * update the user mangopay walletid account.
+     *
+     * @param  int $id User Id
+     * @param  string $mangopay_walletid Wallet Id
+     * @return Collection
+     */
+    public function updateMangoPayWalletId($id, $mangopay_walletid)
+    {
+        $user = \App\User::find($id);
+
+        $user->mangopay_walletid = $mangopay_walletid;
+
+        $user->save();
+
+        return $user;
+    }
+
+    /**
+     * update the user mangopay bank account.
+     *
+     * @param  int $id User Id
+     * @param  string $mangopay_bankaccountid Bank Account Id
+     * @return Collection
+     */
+    public function updateMangoPayBankAccountId($id, $mangopay_bankaccountid)
+    {
+        $user = \App\User::find($id);
+
+        $user->mangopay_bankaccountid = $mangopay_bankaccountid;
+
+        $user->save();
+
+        return $user;
+    }
+
+    /**
+     * update the user mangopay mandate id.
+     *
+     * @param  int $id User Id
+     * @param  string $mangopay_mandateid Mandate Id
+     * @return Collection
+     */
+    public function updateMangoPayMandateId($id, $mangopay_mandateid)
+    {
+        $user = \App\User::find($id);
+
+        $user->mangopay_mandateid = $mangopay_mandateid;
+
+        $user->save();
+
+        return $user;
+    }
+
+    /**
+     * Return the users who are know(parent,houses,orders) by the user connected.
+     *
+     * @param User $user
+     *
+     * @return Collection
+     */
+    public function userKnow(\App\User $user)
+    {
+      return \App\Repositories\UserFriendshipRepository::getFriendsOf($user);
+        // return $user->select('users.id','email', 'firstname', 'lastname')
+        //         ->leftJoin('orders',function($join){
+        //             $join->on('orders.buyer_id','=','users.id')
+        //             ->orOn('orders.owner_id','=','users.id');
+        //         })
+        //         ->leftJoin('houses',function($join){
+        //             $join->on('houses.buyer_id','=','users.id')
+        //             ->orOn('houses.owner_id','=','users.id');
+        //         })
+        //         ->where('users.id','<>',$user->id)
+        //         ->where(function ($query) use ($user) {
+        //         $query->where('parent_id',$user->id)
+        //                 ->orWhere('users.id',$user->parent_id)
+        //                 ->orwhere('orders.owner_id',$user->id)
+        //                 ->orWhere('orders.buyer_id',$user->id)
+        //                 ->orwhere('houses.owner_id',$user->id)
+        //                 ->orWhere('houses.buyer_id',$user->id);
+        //         })
+        //         ->get()
+        //         ->unique();
+    }
+
+    public function exist($email){
+
+
+        $count = DB::table('users')->where('email',$email)->count();
+
+        if($count > 0){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    public function getId($email){
+        return DB::table('users')->select('id')
+                               ->where('email',$email)
+                               ->get();
+    }
+
+    public function haveWaitingPayment(\App\User $user){
+        $count = DB::table('orders')->where('owner_id',$user->id)
+                                    ->where('status','unpaid')
+                                    ->count();
+        if($count > 0){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    public function searchUsersByFirstnameLastnameEmail(\App\User $user, $search_firstname = null, $search_lastname = null, $search_email = null) {
+      // On cherche les amis
+      $friends = \App\User::where('firstname', $search_firstname)
+      ->orWhere('lastname',$search_lastname)
+      ->orWhere('email', $search_email)
+      ->get();
+
+      // On récupère que les id pertinents
+      $friendsList = array();
+      foreach($friends as $friend) {
+        if($friend->id != $user->id)
+          $friendsList[] = $friend->id;
+      }
+
+      // On récupère les utilisateurs perinents
+      $friendsCollection = array();
+      foreach ($friendsList as $key => $value) {
+        if( !isset($friendsCollection[$value]) ) {
+          $friendsCollection[$value] = \App\User::find($value);
+        }
+      }
+
+      // On les affiches
+      return $friendsCollection;
+    }
+}

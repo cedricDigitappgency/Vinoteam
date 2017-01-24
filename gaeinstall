@@ -1,0 +1,1 @@
+php artisan gae:setup --config --cache-config --bucket="vino-team.appspot.com" --db-socket="/cloudsql/vino-team:vinoteam-sql-1" --db-name="vinoteam-sql-1" --db-host="104.155.1.253" vino-team

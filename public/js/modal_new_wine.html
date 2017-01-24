@@ -1,0 +1,107 @@
+<!-- Modal -->
+<div class="modal fade" id="addNewWine_countid" tabindex="-1" role="dialog" aria-labelledby="addNewWineLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-id="countid" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="addNewWineLabel">Créer une fiche de vin</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-info">
+                    Vous pouvez déposer ou télécharger une image de la bouteille ou de son étiquette dans la zone ci-dessous. Vous en trouverez facilement en recherchant sur <a href="https://images.google.com/?hl=fr" target="_blank">Google Images</a>.
+                </div>
+
+                <div class="form-group">
+                    <div id="file_show_countid" class="col-md-12">
+                        <div class="thumbnail hidden text-center" style="margin:auto; width: 50%;">
+                            <img src="http://placehold.it/5" alt="">
+                        </div>
+                    </div>
+                </div>
+                <br />
+
+                <!-- Standar Form -->
+                <h4>Selectionner des images sur votre ordinateur</h4>
+                <div class="form-inline">
+                    <div class="form-group" style="width: 100%; text-align:center;">
+                        <input style="height:120px; background-color:#eee; color:#000;" type="file" class="upload-drop-zone file form-control" data-id="countid" name="file_countid" id="file_countid">
+                        <input type="hidden" value="0" name="file_id_countid" id="file_id_countid">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <div class="col-md-12">
+                    <div class="input-group input-group-xs">
+                        <span class="input-group-addon">
+                            <span class="icon glyphicon glyphicon-pencil"></span>
+                        </span>
+                        <input type="text" id="name_cru_countid" name="name_cru_countid" class="form-control ng-pristine ng-valid" autocomplete="off" placeholder="Nom du vin *" style="">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="form-group">
+                <div class="col-md-12">
+                    <div class="input-group input-group-xs">
+                        <span class="input-group-addon">
+                            <span class="icon glyphicon glyphicon-pencil"></span>
+                        </span>
+                        <input id="year_countid" type="text" name="year_countid" class="form-control ng-pristine ng-valid" autocomplete="off" placeholder="Année" style="">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="form-group">
+                <div class="col-md-12">
+                    <div class="input-group input-group-xs">
+                        <span class="input-group-addon">
+                            <span class="icon glyphicon glyphicon-pencil"></span>
+                        </span>
+                        <input id="productor_countid" type="text" name="productor_countid" class="form-control ng-pristine ng-valid" autocomplete="off" placeholder="Producteur" style="">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="form-group">
+                <div class="col-md-12">
+                    <div class="input-group input-group-xs">
+                        <span class="input-group-addon">
+                            <span class="icon glyphicon glyphicon-pencil"></span>
+                        </span>
+                        <input id="region_countid" type="text" name="region_countid" class="form-control ng-pristine ng-valid" autocomplete="off" placeholder="Région ou appelation" style="">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="form-group">
+                <div class="col-md-12">
+                    <div class="input-group input-group-xs">
+                        <span class="input-group-addon">
+                            <span class="icon glyphicon glyphicon-pencil"></span>
+                        </span>
+                        <textarea style="height:100px;" id="message_countid" name="message_countid" class="form-control ng-pristine ng-valid" autocomplete="off" placeholder="Message (facultatif)" style=""></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div style="clear:both;"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary addNewWineClick" data-id="countid" data-dismiss="modal">Créer</button>
+      </div>
+    </div>
+  </div>
