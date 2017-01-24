@@ -3,3 +3,9 @@
 Homestead.yaml
 Homestead.json
 .env
+/nbproject/private/
+/nbproject/
+*.yaml
+*.py
+*.pyc
+favicon.ico
