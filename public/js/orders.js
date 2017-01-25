@@ -82,7 +82,7 @@ $( document ).ready(function() {
                 $('#addNewWine_'+id).remove();
                 calculatePrice();
                 manageInfobulle();
-            },200);
+            },300);
             closeModal = false;
         }
     });
