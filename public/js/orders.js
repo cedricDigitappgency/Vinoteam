@@ -390,6 +390,7 @@ $( document ).ready(function() {
     });
 
     function loadSelectWines(id){
+        $('#wine_id_'+id).empty();
         $.get(base_url+"user/"+$('#user_id').val()+"/wines", function(data, status){
             console.log(data);
             console.log(status);
