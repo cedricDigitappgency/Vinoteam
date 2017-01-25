@@ -13,6 +13,8 @@ use App\Repositories\WineRepository;
 
 use \Illuminate\Support\Facades\DB;
 
+use Mail;
+
 use Event;
 use App\Events\PostRegistration;
 use App\Events\PaymentInfoWereModified;
@@ -325,7 +327,79 @@ class UserController extends Controller
       $user->save();
 
       // Mettre à jour les infos
-      Event::fire(new PaymentInfoWereModified($user->id));
+      //Event::fire(new PaymentInfoWereModified($user->id));
+      try {
+          // create mangopay natural user
+          $bankAccount = new \MangoPay\BankAccount();
+          $bankAccount->Type = "IBAN";
+          $bankAccount->OwnerName = $user->firstname.' '.$user->lastname;
+          $bankAccount->OwnerAddress = new \MangoPay\Address();
+          $bankAccount->OwnerAddress->AddressLine1 = $user->address;
+          $bankAccount->OwnerAddress->AddressLine2 = $user->address2;
+          $bankAccount->OwnerAddress->City = $user->city;
+          $bankAccount->OwnerAddress->PostalCode = $user->zipcode;
+          $bankAccount->OwnerAddress->Country = $user->country;
+          $bankAccount->Details = new \MangoPay\BankAccountDetailsIBAN();
+          $bankAccount->Details->IBAN = $user->payment_iban;
+          $bankAccount->Details->BIC = $user->payment_bic;
+
+          $result = $this->mangopay->Users->CreateBankAccount($user->mangopay_userid, $bankAccount);
+
+          // update user info
+          $this->users->updateMangoPayBankAccountId($user->id, $result->Id);
+
+          // create mangopay natural user
+          $Mandate = new \MangoPay\Mandate();
+          $Mandate->BankAccountId = $user->mangopay_bankaccountid;
+          $Mandate->Culture = "FR";
+
+          if( $this->users->haveWaitingPayment($user) ){
+            $Mandate->ReturnURL = url('/orders/remboursementsamavinoteam');
+          } else {
+            $Mandate->ReturnURL = url('/home');
+          }
+
+          try {
+              $Result = $this->mangopay->Mandates->Create($Mandate);
+              // update user info
+              $this->users->updateMangoPayMandateId($user->id, $Result->Id);
+
+              if($Result->Status == 'FAILED') {
+                $user->status = "notverified";
+                $user->save();
+                return;
+              }
+
+              Mail::send('emails.postCreateMandate', ['user' => $user, 'url' => $Result->RedirectURL], function($message) use ($user) {
+                  // From
+                  $message->from(config('vinoteam.noreplay_email'), config('vinoteam.sitename'));
+
+                  // To
+                  $message->to($user->email, $user->firstname.' '.$user->lastname);
+
+                  // Subject
+                  $message->subject('Confirmer votre compte bancaire - VinoTeam');
+              });
+          } catch (\MangoPay\Libraries\ResponseException $e) {
+              return redirect('users/paymentInfo')->with('alerts', 'Merci de saisir un IBAN valide.');
+              // \MangoPay\Libraries\Logs::Debug('MangoPay\ResponseException Code', $e->GetCode());
+              // \MangoPay\Libraries\Logs::Debug('Message', $e->GetMessage());
+              // \MangoPay\Libraries\Logs::Debug('Details', $e->GetErrorDetails());
+          } catch (\MangoPay\Libraries\Exception $e) {
+              return redirect('users/paymentInfo')->with('alerts', 'Merci de saisir un IBAN valide.');
+              // \MangoPay\Libraries\Logs::Debug('MangoPay\Exception Message', $e->GetMessage());
+          }
+
+      } catch (\MangoPay\Libraries\ResponseException $e) {
+          return redirect('users/paymentInfo')->with('alerts', 'Merci de saisir un IBAN valide.');
+          // \MangoPay\Libraries\Logs::Debug('MangoPay\ResponseException Code', $e->GetCode());
+          // \MangoPay\Libraries\Logs::Debug('Message', $e->GetMessage());
+          // \MangoPay\Libraries\Logs::Debug('Details', $e->GetErrorDetails());
+      } catch (\MangoPay\Libraries\Exception $e) {
+          return redirect('users/paymentInfo')->with('alerts', 'Merci de saisir un IBAN valide.');
+          // \MangoPay\Libraries\Logs::Debug('MangoPay\Exception Message', $e->GetMessage());
+      }
+
       Event::fire(new VerifyIBAN($user->id));
 
       $user = User::findOrFail($id);

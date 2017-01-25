@@ -35,6 +35,11 @@ function Autotab(box, longueur, texte)
             Pour vérifier vos coordonnés bancaires et en valider l’utilisation pour recevoir ou émettre des remboursements, vous devez cliquer sur le lien de validation qui vient de vous êtes envoyé par email.
         </div>
     </div>@endif
+    @if (session('alerts'))<div class="col-md-12">
+        <div class="alert alert-danger">
+            {{ session('alerts') }}
+        </div>
+    </div>@endif
 
     <div class="row">
       <div class="col-md-12">
