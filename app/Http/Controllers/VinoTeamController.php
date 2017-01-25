@@ -134,7 +134,7 @@ class VinoTeamController extends Controller
         $user = $request->user();
 
         if($request->email == null){
-            return redirect('/ma-vinoteam/inviter-des-amis/')->with('errors', 'Vous devez rentrer au moins une adresse mail');
+            return redirect('/ma-vinoteam/inviter-des-amis/')->with('alerts', 'Vous devez rentrer au moins une adresse mail');
         }
         // Step 2 : validation
         $this->validate($request, [
@@ -150,7 +150,7 @@ class VinoTeamController extends Controller
             $email = trim($email);
 
             if( !filter_var($email, FILTER_VALIDATE_EMAIL) ) {
-                return redirect('/ma-vinoteam/inviter-des-amis/')->with('errors', 'Vous devez saisir des adresses de courriels valides.');
+                return redirect('/ma-vinoteam/inviter-des-amis/')->with('alerts', 'Vous devez saisir des adresses de courriels valides.');
             }
 
             // If the mail is not registered in our database
@@ -178,7 +178,7 @@ class VinoTeamController extends Controller
         }
 
         if( $errors != "" ) {
-            return redirect('/ma-vinoteam/inviter-des-amis/')->with('errors', $errors);
+            return redirect('/ma-vinoteam/inviter-des-amis/')->with('alerts', $errors);
         } else {
             return redirect('/ma-vinoteam/inviter-des-amis/')->with('status', 'Invitation envoyée ! Invitez tous vos amis à rejoindre votre VinoTeam, partagez vos bons plans et faites des économies en achetant groupé !');
         }
@@ -209,44 +209,46 @@ class VinoTeamController extends Controller
       if(count($request->destinataires) >= 1) {
         foreach($request->destinataires as $dest) {
           if( !\App\User::find($dest) ) {
-            return redirect('/proposer-un-bon-plan')->with('errors', 'Ce membre n\'existe pas.');
+            return redirect('/proposer-un-bon-plan')->with('alerts', 'Ce membre n\'existe pas.');
           }
           $destinataires[] = $dest;
         }
       }
 
       // Step 2.2 Gestion des destinataires inconnus
-      $unknownList = explode(',', $request->newUsers);
+      if( $request->newUsers != '' ) {
+        $unknownList = explode(',', $request->newUsers);
 
-      if(count($unknownList) >= 1) {
-        foreach($unknownList as $email) {
-          $email = trim($email);
+        if(count($unknownList) >= 1) {
+          foreach($unknownList as $email) {
+            $email = trim($email);
 
-          if( filter_var($email, FILTER_VALIDATE_EMAIL) ) {
-            if( !$this->users->exist($email) ){
-              $newUserId = \App\User::create([
-                  'email' => $email,
-                  'parent_id' => $user->id
-              ])->id;
+            if( filter_var($email, FILTER_VALIDATE_EMAIL) ) {
+              if( !$this->users->exist($email) ){
+                $newUserId = \App\User::create([
+                    'email' => $email,
+                    'parent_id' => $user->id
+                ])->id;
 
-              Event::fire(new InviteFriends($user->id, $newUserId, $request->message));
+                Event::fire(new InviteFriends($user->id, $newUserId, $request->message));
+              } else {
+                $uid = $this->users->getId($email);
+                $newUserId = $uid[0]->id;
+              }
+
+              $this->users_friendship->createRelationshipFrom(\App\User::find($user->id), \App\User::find($newUserId));
+
+              $destinataires[] = $newUserId;
             } else {
-              $uid = $this->users->getId($email);
-              $newUserId = $uid[0]->id;
+              return redirect('/proposer-un-bon-plan')->with('alerts', 'Veuillez saisir des courriels valides.');
             }
-
-            $this->users_friendship->createRelationshipFrom(\App\User::find($user->id), \App\User::find($newUserId));
-
-            $destinataires[] = $newUserId;
-          } else {
-            return redirect('/proposer-un-bon-plan')->with('errors', 'Veuillez saisir des courriels valides.');
           }
         }
       }
 
       // Step 3 : send the bon plan
       if(count($destinataires) == 0) {
-        return redirect('/proposer-un-bon-plan')->with('errors', 'Aucun contact valide n\'a été saisi.');
+        return redirect('/proposer-un-bon-plan')->with('alerts', 'Aucun contact valide n\'a été saisi.');
       }
 
       foreach($destinataires as $destinataire) {

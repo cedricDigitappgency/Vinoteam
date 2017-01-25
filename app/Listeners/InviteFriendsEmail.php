@@ -34,26 +34,17 @@ class InviteFriendsEmail
         $inviteUser = User::find($event->inviteUserId);
         $bodyMessage = $event->message;
 
-        // Si on a déjà validé le compte
-        // Ou qu'on a déjà reçu un courriel de bienvenue
-        // Ou qu'on a déjà renseigné le nom/prénom
-        // On n'envoit pas de courriel
-        if( $inviteUser->emailValidate == 1 ||
-            $inviteUser->received_welcome_mail == 1 || 
-            ($inviteUser->firstname != '' && $inviteUser->lastname != '' )
-        ) {
-          return;
+        if($inviteUser->emailValidate == 0 && $inviteUser->received_welcome_mail == 0 && $inviteUser->firstname == '' && $inviteUser->lastname == '') {
+          Mail::send('emails.inviteFriends', ['user' => $currentUser, 'newUser' => $inviteUser, 'bodyMessage' => $bodyMessage], function($message) use ($inviteUser) {
+              // From
+              $message->from(config('vinoteam.noreplay_email'), config('vinoteam.sitename'));
+
+              // To
+              $message->to($inviteUser->email);
+
+              // Subject
+              $message->subject('Vos amis vous attendent sur VinoTeam');
+          });
         }
-
-        Mail::send('emails.inviteFriends', ['user' => $currentUser, 'newUser' => $inviteUser, 'bodyMessage' => $bodyMessage], function($message) use ($inviteUser) {
-            // From
-            $message->from(config('vinoteam.noreplay_email'), config('vinoteam.sitename'));
-
-            // To
-            $message->to($inviteUser->email);
-
-            // Subject
-            $message->subject('Vos amis vous attendent sur VinoTeam');
-        });
     }
 }

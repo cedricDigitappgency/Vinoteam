@@ -19,11 +19,12 @@ active
               {{ session('status') }}
           </div>
     </div>@endif
-    @if (session('errors'))<div class="col-md-12">
+    @if (session('alerts'))<div class="col-md-12">
         <div class="alert alert-danger">
-            {{ session('errors') }}
+            {{ session('alerts') }}
         </div>
     </div>@endif
+    </div>
 
     <div class="row">
       <div class="col-md-12">
@@ -34,10 +35,12 @@ active
             <label for="destinataires">Destinataire(s) membre(s) de ma VinoTeam :</label>
             <select id="destinataires" autocomplete="off" type="text" class="form-control chosen-select" name="destinataires[]" multiple="multiple" data-placeholder="Destinataire(s) membre(s) de ma VinoTeam">
               @foreach($friends as $user)
+              @if($user)
               @if($user->firstname == '' or $user->lastname == '')
               <option value="{{ $user->id }}">{{ $user->email }}</option>
               @else
               <option value="{{ $user->id }}">{{ $user->firstname . ' ' . $user->lastname }} ({{ $user->email }})</option>
+              @endif
               @endif
               @endforeach
             </select>

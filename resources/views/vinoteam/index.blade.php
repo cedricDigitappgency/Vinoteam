@@ -37,9 +37,9 @@ active
                 {{ session('status') }}
             </div>
         </div>@endif
-        @if (session('errors'))<div class="col-md-12">
+        @if (session('alerts'))<div class="col-md-12">
             <div class="alert alert-danger">
-                {{ session('errors') }}
+                {{ session('alerts') }}
             </div>
         </div>@endif
 

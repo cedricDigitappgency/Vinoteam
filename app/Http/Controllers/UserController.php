@@ -381,12 +381,12 @@ class UserController extends Controller
                   $message->subject('Confirmer votre compte bancaire - VinoTeam');
               });
           } catch (\MangoPay\Libraries\ResponseException $e) {
-              return redirect('users/paymentInfo')->with('alerts', 'Merci de saisir un IBAN valide.');
+              return redirect('users/paymentInfo')->with('alerts', 'Erreur lors de la création du mandat.');
               // \MangoPay\Libraries\Logs::Debug('MangoPay\ResponseException Code', $e->GetCode());
               // \MangoPay\Libraries\Logs::Debug('Message', $e->GetMessage());
               // \MangoPay\Libraries\Logs::Debug('Details', $e->GetErrorDetails());
           } catch (\MangoPay\Libraries\Exception $e) {
-              return redirect('users/paymentInfo')->with('alerts', 'Merci de saisir un IBAN valide.');
+              return redirect('users/paymentInfo')->with('alerts', 'Erreur lors de la création du mandat.');
               // \MangoPay\Libraries\Logs::Debug('MangoPay\Exception Message', $e->GetMessage());
           }
 

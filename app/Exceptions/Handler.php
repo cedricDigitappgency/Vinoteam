@@ -46,6 +46,10 @@ class Handler extends ExceptionHandler
             $e = new NotFoundHttpException($e->getMessage(), $e);
         }
 
+        if ($e instanceof TokenMismatchException) {
+    			return redirect(route('login'))->withError('error_message', 'Votre session a expiré. Merci de bien vouloir vous reconnecter.');
+    		}
+
         return parent::render($request, $e);
     }
 }

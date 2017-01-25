@@ -24,8 +24,8 @@ active
               {{ session('errors') }}
           </div>
       </div>@endif
-      
-  		<p>Vous pouvez effectuez les actions suviantes :</p>
+
+  		<p>Vous pouvez effectuez les actions suivantes :</p>
 	    <ul class="icons-list">
             <li><i class="icon-check-2"></i> <a href="{{ url('users/'.$user->id.'/edit') }}">Profil</a></li>
             <li><i class="icon-check-2"></i> <a href="{{ url('users/paymentInfo') }}">Coordonnées bancaires</a></li>
