@@ -17,6 +17,11 @@ active
 
     <div class="container">
         <div class="row">
+            @if (session('error_message'))<div class="col-md-12">
+                <div class="alert alert-success">
+                    {{ session('error_message') }}
+                </div>
+            </div>@endif
             <div class="col-md-12">
                 <form role="form" method="POST" action="{{ url('/login') }}">
                     {{ csrf_field() }}

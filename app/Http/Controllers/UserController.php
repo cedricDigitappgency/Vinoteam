@@ -347,10 +347,11 @@ class UserController extends Controller
 
           // update user info
           $this->users->updateMangoPayBankAccountId($user->id, $result->Id);
+          $user = User::findOrFail($id);
 
           // create mangopay natural user
           $Mandate = new \MangoPay\Mandate();
-          $Mandate->BankAccountId = $user->mangopay_bankaccountid;
+          $Mandate->BankAccountId = $result->Id;
           $Mandate->Culture = "FR";
 
           if( $this->users->haveWaitingPayment($user) ){
@@ -391,12 +392,12 @@ class UserController extends Controller
           }
 
       } catch (\MangoPay\Libraries\ResponseException $e) {
-          return redirect('users/paymentInfo')->with('alerts', 'Merci de saisir un IBAN valide.');
+        return redirect('users/paymentInfo')->with('alerts', 'Merci de saisir un IBAN valide.');
           // \MangoPay\Libraries\Logs::Debug('MangoPay\ResponseException Code', $e->GetCode());
           // \MangoPay\Libraries\Logs::Debug('Message', $e->GetMessage());
           // \MangoPay\Libraries\Logs::Debug('Details', $e->GetErrorDetails());
       } catch (\MangoPay\Libraries\Exception $e) {
-          return redirect('users/paymentInfo')->with('alerts', 'Merci de saisir un IBAN valide.');
+        return redirect('users/paymentInfo')->with('alerts', 'Merci de saisir un IBAN valide.');
           // \MangoPay\Libraries\Logs::Debug('MangoPay\Exception Message', $e->GetMessage());
       }
 

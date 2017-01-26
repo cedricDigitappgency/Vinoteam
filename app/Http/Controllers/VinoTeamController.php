@@ -145,7 +145,7 @@ class VinoTeamController extends Controller
         // Step 3 : explode & logical
         $emails = explode(',', $request->email);
 
-        $errors = "";
+        $status = "";
         foreach($emails as $email) {
             $email = trim($email);
 
@@ -166,9 +166,9 @@ class VinoTeamController extends Controller
                 $search_user = \App\User::find($uid[0]->id);
 
                 if( $search_user->gender == 'O' ) {
-                    $errors .= 'Votre ami '.$email.' a déjà reçu une notification à rejoindre VinoTeam. Il fait désormais parti de votre VinoTeam.';
+                    $status .= 'Votre ami '.$email.' a fait désormais parti de votre VinoTeam.';
                 } else {
-                    $errors .= 'Votre ami '.$search_user->firstname.' '. $search_user->lastname .' est déjà utilisateur de VinoTeam. Il fait désormais parti de votre VinoTeam.';
+                    $status .= 'Votre ami '.$search_user->firstname.' '. $search_user->lastname .' fait désormais parti de votre VinoTeam.';
                 }
 
                 $uid = $uid[0]->id;
@@ -178,7 +178,7 @@ class VinoTeamController extends Controller
         }
 
         if( $errors != "" ) {
-            return redirect('/ma-vinoteam/inviter-des-amis/')->with('alerts', $errors);
+            return redirect('/ma-vinoteam/inviter-des-amis/')->with('alerts', $status);
         } else {
             return redirect('/ma-vinoteam/inviter-des-amis/')->with('status', 'Invitation envoyée ! Invitez tous vos amis à rejoindre votre VinoTeam, partagez vos bons plans et faites des économies en achetant groupé !');
         }
@@ -259,7 +259,8 @@ class VinoTeamController extends Controller
 
         Mail::send('emails.proposerBonPlan', ['user' => $user, 'destinataire' => $dest, 'bodyMessage' => $request->message], function($message) use ($dest, $user) {
             // From
-            $message->from(config('vinoteam.noreplay_email'), config('vinoteam.sitename'));
+            // $message->from(config('vinoteam.noreplay_email'), config('vinoteam.sitename'));
+            $message->from(config('vinoteam.noreplay_email'), $user->firstname.' '.$user->lastname);
 
             // Reply-To
             $message->replyTo($user->email, $user->firstname.' '.$user->lastname);

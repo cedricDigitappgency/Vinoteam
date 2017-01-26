@@ -148,7 +148,7 @@ class AuthController extends Controller
 
       // postRegistrationEvent
       Event::fire(new PreRegistration($user->id));
-      
+
       return $user;
     }
 
@@ -157,15 +157,15 @@ class AuthController extends Controller
      *
      * @return Response
      */
-    public function authenticated(Request $request,User $user)
+    public function authenticated(Request $request, User $user)
     {
         if($user->firstname == null OR $user->lastname == null){
             return redirect('/users/profile');
         }
-        if($user->payment_iban != null && $this->users->haveWaitingPayment($user)){
-            return redirect('/orders/remboursementsamavinoteam');
-        }
-        return redirect()->intended('/home');
+        // if($user->payment_iban != null && $this->users->haveWaitingPayment($user)){
+        //     return redirect('/orders/remboursementsamavinoteam');
+        // }
+        return redirect()->intended('/orders/remboursementsamavinoteam');
     }
 
     public function showRegistrationForm()
