@@ -7,8 +7,8 @@ use \Illuminate\Support\Facades\DB;
 
 class HouseRepository
 {
-    
-    
+
+
     /**
      * Get all of the houses for a given user where he is owner.
      *
@@ -27,9 +27,9 @@ class HouseRepository
         //             ->orderBy('created_at', 'asc')
         //             ->get();
 
-        return $houses = DB::select('select h1.id, DATE_FORMAT(h1.created_at, \'%d/%m/%Y %H:%i:%s\') as created_at, name_cru, year, productor, region, path, wine_id, wines.message as wine_message, email, firstname, lastname, h1.quantity, container, h1.message from houses as h1 left join users on users.id=h1.buyer_id left join wines on wines.id=h1.wine_id left join files on files.id=wines.file_id where owner_id=:owner_id and h1.quantity != 0 and h1.created_at = (select max(h2.created_at) from houses as h2 where h1.id=h2.id) group by h1.id ORDER BY h1.created_at DESC', [':owner_id' => $id]);
+        return $houses = DB::select('select h1.id, h1.created_at as created_at, name_cru, year, productor, region, path, wine_id, wines.message as wine_message, email, firstname, lastname, h1.quantity, container, h1.message FROM houses as h1 LEFT JOIN users on users.id=h1.buyer_id LEFT JOIN wines on wines.id=h1.wine_id LEFT JOIN files on files.id=wines.file_id WHERE owner_id=:owner_id and h1.quantity != 0 and h1.created_at = (select max(h2.created_at) from houses as h2 where h1.id=h2.id) GROUP BY h1.id ORDER BY h1.created_at DESC', [':owner_id' => $id]);
     }
-    
+
     /**
      * Get all of the houses for a given user where he is seller.
      *
@@ -47,11 +47,11 @@ class HouseRepository
                     ->where('owner_id', '<>', $id)
                     ->orderBy('created_at', 'asc')
                     ->get();
-         * 
+         *
          */
         return $houses = DB::select('select h1.id, DATE_FORMAT(h1.created_at, \'%d/%m/%Y %H:%i:%s\') as created_at, name_cru, year, productor, region, path, wine_id, wines.message as wine_message, email, firstname, lastname, h1.quantity, container, h1.message from houses as h1 left join users on users.id=h1.owner_id left join wines on wines.id=h1.wine_id left join files on files.id=wines.file_id where buyer_id=:buyer_id and owner_id!=:buyer_id2 and h1.quantity != 0 and h1.created_at = (select max(h2.created_at) from houses as h2 where h1.id=h2.id) group by h1.id ORDER BY h1.created_at DESC', [':buyer_id' => $id, ':buyer_id2' => $id]);
     }
-    
+
     /**
      * Get all of the houses for a given user where he is owner and the house is empty.
      *
@@ -70,7 +70,7 @@ class HouseRepository
                     ->orderBy('created_at', 'asc')
                     ->get();
     }
-    
+
     /**
      * Get all of the houses for a given user where he is buyer and the house is empty.
      *
@@ -89,7 +89,7 @@ class HouseRepository
                     ->orderBy('created_at', 'asc')
                     ->get();
     }
-    
+
     /**
      * Get the house.
      *
@@ -105,9 +105,9 @@ class HouseRepository
                             ->where('houses.id',$id)
                             ->orderBy('houses.created_at', 'desc')
                             ->get();
-                    
+
     }
-    
+
     /**
      * update the house.
      *
@@ -117,13 +117,13 @@ class HouseRepository
     public function updateHouse($request)
     {
         $house = App\House::find($request->id);
-          
+
         $house->quantity = $request->quantity;
-        
+
         $house->save();
-        
+
         return $house;
-                    
+
     }
 
     /**
@@ -143,7 +143,7 @@ class HouseRepository
                     ->where('houses.id',$id)
                     ->orderBy('houses.created_at', 'asc')
                     ->get();
-        
-        
+
+
     }
 }

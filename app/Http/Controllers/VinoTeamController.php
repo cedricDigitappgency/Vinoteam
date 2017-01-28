@@ -177,8 +177,8 @@ class VinoTeamController extends Controller
             $this->users_friendship->createRelationshipFrom($user, \App\User::find($uid));
         }
 
-        if( $errors != "" ) {
-            return redirect('/ma-vinoteam/inviter-des-amis/')->with('alerts', $status);
+        if( $status != "" ) {
+            return redirect('/ma-vinoteam/inviter-des-amis/')->with('status', $status);
         } else {
             return redirect('/ma-vinoteam/inviter-des-amis/')->with('status', 'Invitation envoyée ! Invitez tous vos amis à rejoindre votre VinoTeam, partagez vos bons plans et faites des économies en achetant groupé !');
         }
