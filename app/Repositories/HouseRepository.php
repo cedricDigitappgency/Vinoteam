@@ -27,7 +27,7 @@ class HouseRepository
         //             ->orderBy('created_at', 'asc')
         //             ->get();
 
-        return $houses = DB::select('select h1.id, h1.created_at as created_at, name_cru, year, productor, region, path, wine_id, wines.message as wine_message, email, firstname, lastname, h1.quantity, container, h1.message FROM houses as h1 LEFT JOIN users on users.id=h1.buyer_id LEFT JOIN wines on wines.id=h1.wine_id LEFT JOIN files on files.id=wines.file_id WHERE owner_id=:owner_id and h1.quantity != 0 and h1.created_at = (select max(h2.created_at) from houses as h2 where h1.id=h2.id) GROUP BY h1.id ORDER BY h1.created_at DESC', [':owner_id' => $id]);
+        return $houses = DB::select('select h1.id, DATE_FORMAT(h1.created_at, \'%d/%m/%Y %H:%i:%s\') as created_at, name_cru, year, productor, region, path, wine_id, wines.message as wine_message, email, firstname, lastname, h1.quantity, container, h1.message from houses as h1 left join users on users.id=h1.buyer_id left join wines on wines.id=h1.wine_id left join files on files.id=wines.file_id where owner_id=:owner_id and h1.quantity != 0 and h1.created_at = (select max(h2.created_at) from houses as h2 where h1.id=h2.id) ORDER BY h1.created_at DESC', [':owner_id' => $id]);
     }
 
     /**
@@ -49,7 +49,7 @@ class HouseRepository
                     ->get();
          *
          */
-        return $houses = DB::select('select h1.id, DATE_FORMAT(h1.created_at, \'%d/%m/%Y %H:%i:%s\') as created_at, name_cru, year, productor, region, path, wine_id, wines.message as wine_message, email, firstname, lastname, h1.quantity, container, h1.message from houses as h1 left join users on users.id=h1.owner_id left join wines on wines.id=h1.wine_id left join files on files.id=wines.file_id where buyer_id=:buyer_id and owner_id!=:buyer_id2 and h1.quantity != 0 and h1.created_at = (select max(h2.created_at) from houses as h2 where h1.id=h2.id) group by h1.id ORDER BY h1.created_at DESC', [':buyer_id' => $id, ':buyer_id2' => $id]);
+        return $houses = DB::select('select h1.id, DATE_FORMAT(h1.created_at, \'%d/%m/%Y %H:%i:%s\') as created_at, name_cru, year, productor, region, path, wine_id, wines.message as wine_message, email, firstname, lastname, h1.quantity, container, h1.message from houses as h1 left join users on users.id=h1.owner_id left join wines on wines.id=h1.wine_id left join files on files.id=wines.file_id where buyer_id=:buyer_id and owner_id!=:buyer_id2 and h1.quantity != 0 and h1.created_at = (select max(h2.created_at) from houses as h2 where h1.id=h2.id) ORDER BY h1.created_at DESC', [':buyer_id' => $id, ':buyer_id2' => $id]);
     }
 
     /**
