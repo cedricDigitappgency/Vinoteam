@@ -836,11 +836,20 @@ class OrderController extends Controller
 
         $PayInBankToOwner->DebitedFunds = new \MangoPay\Money();
         $PayInBankToOwner->DebitedFunds->Currency = "EUR";
-        $PayInBankToOwner->DebitedFunds->Amount = str_replace('.', '', number_format($order->price*1.035, 2, '.', ''));
 
         $PayInBankToOwner->Fees = new \MangoPay\Money();
         $PayInBankToOwner->Fees->Currency = "EUR";
-        $PayInBankToOwner->Fees->Amount = str_replace('.', '', number_format($order->price*0.035, 2, '.', ''));
+
+        if( $order->price >= 150 && $order->price < 300 ) {
+          $PayInBankToOwner->DebitedFunds->Amount = str_replace('.', '', number_format($order->price*1.03, 2, '.', ''));
+          $PayInBankToOwner->Fees->Amount = str_replace('.', '', number_format($order->price*0.03, 2, '.', ''));
+        } elseif( $order->price >= 300 ) {
+          $PayInBankToOwner->DebitedFunds->Amount = str_replace('.', '', number_format($order->price*1.025, 2, '.', ''));
+          $PayInBankToOwner->Fees->Amount = str_replace('.', '', number_format($order->price*0.025, 2, '.', ''));
+        } else {
+          $PayInBankToOwner->DebitedFunds->Amount = str_replace('.', '', number_format($order->price*1.035, 2, '.', ''));
+          $PayInBankToOwner->Fees->Amount = str_replace('.', '', number_format($order->price*0.035, 2, '.', ''));
+        }
 
         $PayInBankToOwner->ExecutionType = "DIRECT";
         $PayInBankToOwner->ExecutionDetails = new \MangoPay\PayInExecutionDetailsDirect();
