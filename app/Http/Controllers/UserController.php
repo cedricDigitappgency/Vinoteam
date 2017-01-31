@@ -188,7 +188,10 @@ class UserController extends Controller
       $user->update($data);
 
       //return response()->json($user);
-      if(isset($_GET['new']) && $_GET['new'] == 1){
+      if(isset($_GET['new']) && $_GET['new'] == 1) {
+          // on notifie les amis du nouveau membre qu'il peuvent partager des vins avec
+          Event::fire(new NotificateFriendsOfNewRegistration($user->id));
+
           return redirect('/newAccount');
       }
       return redirect('users')->with('status', 'Vos informations ont été mises à jour.');
