@@ -888,7 +888,7 @@ class OrderController extends Controller
       ]);
       }
 
-      // Event::fire(new PostPaymentOrder($orderId));
+      Event::fire(new PostPaymentOrder($orderId));
 
       return redirect('/orders/paiement');
     }

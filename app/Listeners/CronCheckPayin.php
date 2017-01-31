@@ -11,7 +11,6 @@ use App\User;
 
 use Event;
 use App\Events\PostPaymentOrder;
-use App\Events\MissingUserMandate;
 
 class CronCheckPayin
 {
@@ -37,24 +36,6 @@ class CronCheckPayin
         $owner = User::find($order->owner_id);
         $buyer = User::find($order->buyer_id);
 
-        // On vérifie le mandat de l'buyer pour qu'il puisse bien recevoir l'argent
-        try {
-          $Mandate = $this->mangopay->Mandates->Get($buyer->mangopay_mandateid);
-
-          if($Mandate->Status == 'FAILED') {
-            Event::fire(new MissingUserMandate($buyer->id));
-            // envoyer un courriel pour dire qu'on peut pas virer l'argent
-            return;
-          }
-
-        } catch (\MangoPay\Libraries\ResponseException $e) {
-          \MangoPay\Libraries\Logs::Debug('MangoPay\ResponseException Code', $e->GetCode());
-          \MangoPay\Libraries\Logs::Debug('Message', $e->GetMessage());
-          \MangoPay\Libraries\Logs::Debug('Details', $e->GetErrorDetails());
-        } catch (\MangoPay\Libraries\Exception $e) {
-          \MangoPay\Libraries\Logs::Debug('MangoPay\Exception Message', $e->GetMessage());
-        }
-
         try
         {
             $PayIn = $this->mangopay->PayIns->Get($order->mangopay_payin);
@@ -71,7 +52,19 @@ class CronCheckPayin
             $order->save();
             return;
         } elseif( isset($PayIn) && $PayIn->Status == 'FAILED' ) {
-            $order->status = "canceled";
+            // Lancer un événement pour avertir les deux personnes
+            Mail::send('emails.orderFailed', ['buyer' => $buyer, 'order' => $order, 'owner' => $owner], function($message) use ($buyer, $order, $owner) {
+                // From
+                $message->from(config('vinoteam.noreplay_email'), config('vinoteam.sitename'));
+
+                // To
+                $message->to($owner->email);
+
+                // Subject
+                $message->subject('Le paiement n\'a pas abouti');
+            });
+
+            $order->status = "unpaid";
             $order->save();
             return;
         }
@@ -144,7 +137,16 @@ class CronCheckPayin
                 $order->status = "paid";
                 $order->save();
 
-                Event::fire(new PostPaymentOrder($orderId));
+                Mail::send('emails.orderVirementSuccess', ['buyer' => $buyer, 'order' => $order, 'owner' => $owner], function($message) use ($buyer, $order, $owner) {
+                    // From
+                    $message->from(config('vinoteam.noreplay_email'), config('vinoteam.sitename'));
+
+                    // To
+                    $message->to($buyer->email);
+
+                    // Subject
+                    $message->subject('Remboursement de votre ami');
+                });
 
             } catch (\MangoPay\Libraries\ResponseException $e) {
 

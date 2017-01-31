@@ -54,9 +54,6 @@ class EventServiceProvider extends ServiceProvider
       'App\Events\PostCreateRelationship' => [
           'App\Listeners\PostCreateRelationshipEmail',
       ],
-      'App\Events\MissingUserMandate' => [
-          'App\Listeners\MissingUserMandateEmail',
-      ],
     ];
 
     /**

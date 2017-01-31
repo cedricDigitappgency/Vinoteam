@@ -81,10 +81,10 @@
                     <td>Remboursement de votre ami</td>
                     <td>{{ $order->price }}€</td>
                  </tr>
-                 <tr style="background-color:#f1f2f2">
+                 <!--<tr style="background-color:#f1f2f2">
                     <td>Frais de gestion</td>
                     <td>{{ number_format($order->price*0.035, 2, '.', '') }}€</td>
-                 </tr>
+                 </tr>-->
                 <tr>
                     <td><strong>Total</strong></td>
                     <td>{{ $priceWtax = number_format($order->price*1.035, 2, '.', '') }}€</td>
