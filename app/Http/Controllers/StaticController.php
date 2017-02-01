@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 
 use Event;
 use App\Events\CheckPayin;
+use App\Events\CronUserUnregistered;
 use App\Events\PostFailedPayIn;
 use App\Events\PostSuccessPayIn;
 
@@ -24,7 +25,7 @@ class StaticController extends Controller
      *
      * @return void
      */
-    public function __construct(OrderRepository $order ,\MangoPay\MangoPayApi $mangopay)
+    public function __construct(OrderRepository $order, \MangoPay\MangoPayApi $mangopay)
     {
         $this->mangopay = $mangopay;
         $this->order = $order;
@@ -98,14 +99,30 @@ class StaticController extends Controller
               \MangoPay\Libraries\Logs::Debug('MangoPay\Exception Message', $e->GetMessage());
             }
 
-            if($PayIn->Status=="SUCCEEDED")
-            {
-                Event::fire(new PostSuccessPayIn($order->id));
-            }
-            else if($PayIn->Status=="FAILED")
-            {
-                Event::fire(new PostFailedPayIn($order->id));
-            }
+            // if($PayIn->Status=="SUCCEEDED")
+            // {
+            //     Event::fire(new PostSuccessPayIn($order->id));
+            // }
+            // else if($PayIn->Status=="FAILED")
+            // {
+            //     Event::fire(new PostFailedPayIn($order->id));
+            // }
         }
+
+        $users_unregistered = \App\User::where('firstname', '')->orWhere('lastname', '')->get();
+        foreach($users_unregistered as $user) {
+          Event::fire(new CronUserUnregistered($user->id));
+        }
+
+        $users_without_transactions = $this->users->getAllUsersWithoutTransactions();
+        foreach($users_without_transactions as $user) {
+          Event::fire(new CronUserWithoutTransactions($user->id));
+        }
+
+        // $users_with_buyer_once =
+
+        // $users_with_owner_once =
+
+        // $users_owner_paid_twice_by_card =
     }
 }
