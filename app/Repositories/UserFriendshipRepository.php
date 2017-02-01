@@ -52,6 +52,18 @@ class UserFriendshipRepository
     return true;
   }
 
+  public function deleteFriendsOf(User $user) {
+    UserFriendship::where([
+      ['user1Id', '=', $user->id],
+    ])->delete();
+
+    UserFriendship::where([
+      ['user2Id', '=', $user->id],
+    ])->delete();
+
+    return true;
+  }
+
   public function isFriendOf(User $user1, User $user2) {
     $count = UserFriendship::where('user1Id', '=', $user1->id)
       ->where('user2Id', '=', $user2->id)
