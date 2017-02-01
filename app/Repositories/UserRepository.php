@@ -244,4 +244,18 @@ class UserRepository
       // On les affiches
       return $friendsCollection;
     }
+
+    public function getAllUsersWithoutTransactions() {
+
+      $users = DB::select("SELECT id FROM users U WHERE U.id NOT IN (SELECT buyer_id FROM orders O1 WHERE O1.buyer_id NOT IN (SELECT owner_id FROM orders O2))");
+
+      $users_without_transactions = array();
+      foreach($users as $user) {
+        if(\App\User::find($user['id'])) {
+          $users_without_transactions[] = \App\User::find($user['id']);
+        }
+      }
+
+      return $users_without_transactions;
+    }
 }
