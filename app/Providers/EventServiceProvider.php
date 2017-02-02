@@ -64,6 +64,12 @@ class EventServiceProvider extends ServiceProvider
       'App\Events\CronUserWithoutTransactions' => [
           'App\Listeners\CronUserWithoutTransactionsAction',
       ],
+      'App\Events\CronOwnerWithSingleTransaction' => [
+          'App\ListenersCronOwnerWithSingleTransactionAction',
+      ],
+      'App\Events\CronBuyerWithSingleTransaction' => [
+          'App\Listeners\CronBuyerWithSingleTransactionAction',
+      ],
     ];
 
     /**
