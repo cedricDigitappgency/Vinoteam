@@ -119,9 +119,15 @@ class StaticController extends Controller
           Event::fire(new CronUserWithoutTransactions($user->id));
         }
 
-        // $users_with_buyer_once =
+        $users_with_owner_once = $this->users->getAllUsersOwnerSingleTransaction();
+        foreach($users_without_transactions as $user) {
+          Event::fire(new CronOwnerWithSingleTransaction($user->id));
+        }
 
-        // $users_with_owner_once =
+        $users_with_buyer_once = $this->users->getAllUsersBuyerSingleTransaction();
+        foreach($users_without_transactions as $user) {
+          Event::fire(new CronBuyerWithSingleTransaction($user->id));
+        }
 
         // $users_owner_paid_twice_by_card =
     }
