@@ -246,7 +246,6 @@ class UserRepository
     }
 
     public function getAllUsersWithoutTransactions() {
-
       $users = DB::select("SELECT id FROM users U WHERE U.id NOT IN (SELECT buyer_id FROM orders O1 WHERE O1.buyer_id NOT IN (SELECT owner_id FROM orders O2))");
 
       $users_without_transactions = array();
@@ -257,5 +256,31 @@ class UserRepository
       }
 
       return $users_without_transactions;
+    }
+
+    public function getAllUsersOwnerSingleTransaction() {
+      $users = DB::select("SELECT owner_id FROM orders O GROUP BY owner_id HAVING count(owner_id) = 1");
+
+      $owner_with_once_transactions = array();
+      foreach($users as $user) {
+        if(\App\User::find($user['id'])) {
+          $owner_with_once_transactions[] = \App\User::find($user['id']);
+        }
+      }
+
+      return $owner_with_once_transactions;
+    }
+
+    public function getAllUsersBuyerSingleTransaction() {
+      $users = DB::select("SELECT buyer_id FROM orders O GROUP BY buyer_id HAVING count(buyer_id) = 1");
+
+      $buyer_with_once_transactions = array();
+      foreach($users as $user) {
+        if(\App\User::find($user['id'])) {
+          $buyer_with_once_transactions[] = \App\User::find($user['id']);
+        }
+      }
+
+      return $buyer_with_once_transactions;
     }
 }
