@@ -648,6 +648,8 @@ class OrderController extends Controller
         $amount = $order->price;
         $currency = 'EUR';
 
+        $owner = \App\User::find($order->owner_id);
+
         try{
             if($order->owner->mangopay_cardId == null || $this->mangopay->Cards->Get($order->owner->mangopay_cardId)->Validity != 'VALID'){
                 //die($cardRegisterId);
@@ -660,7 +662,6 @@ class OrderController extends Controller
                 }
                 $card = $this->mangopay->Cards->Get($updatedCardRegister->CardId);
 
-                $owner = \App\User::find($order->owner_id);
                 $owner->mangopay_cardId = $updatedCardRegister->CardId;
                 $owner->save();
 
@@ -676,11 +677,18 @@ class OrderController extends Controller
             $payIn->CreditedWalletId = $order->owner->mangopay_walletid;
             $payIn->AuthorId = $order->owner->mangopay_userid;
             $payIn->DebitedFunds = new \MangoPay\Money();
-            $payIn->DebitedFunds->Amount = str_replace('.', '', number_format($amount*1.035, 2, '.', ''));
             $payIn->DebitedFunds->Currency = $currency;
             $payIn->Fees = new \MangoPay\Money();
-            $payIn->Fees->Amount = str_replace('.', '', number_format($amount*0.035, 2, '.', ''));
             $payIn->Fees->Currency = $currency;
+
+            // Si on rembourse pour la première fois
+            if( count($owner->orders_owner()) == 0) {
+              $payIn->DebitedFunds->Amount = str_replace('.', '', number_format($amount, 2, '.', ''));
+              $payIn->Fees->Amount = str_replace('.', '', number_format($amount*0, 2, '.', ''));
+            } else {
+              $payIn->DebitedFunds->Amount = str_replace('.', '', number_format($amount*1.035, 2, '.', ''));
+              $payIn->Fees->Amount = str_replace('.', '', number_format($amount*0.035, 2, '.', ''));
+            }
 
             $payIn->PaymentDetails = new \MangoPay\PayInPaymentDetailsCard();
             $payIn->PaymentDetails->CardType = $card->CardType;
@@ -840,15 +848,21 @@ class OrderController extends Controller
         $PayInBankToOwner->Fees = new \MangoPay\Money();
         $PayInBankToOwner->Fees->Currency = "EUR";
 
-        if( $order->price >= 150 && $order->price < 300 ) {
-          $PayInBankToOwner->DebitedFunds->Amount = str_replace('.', '', number_format($order->price*1.03, 2, '.', ''));
-          $PayInBankToOwner->Fees->Amount = str_replace('.', '', number_format($order->price*0.03, 2, '.', ''));
-        } elseif( $order->price >= 300 ) {
-          $PayInBankToOwner->DebitedFunds->Amount = str_replace('.', '', number_format($order->price*1.025, 2, '.', ''));
-          $PayInBankToOwner->Fees->Amount = str_replace('.', '', number_format($order->price*0.025, 2, '.', ''));
-        } else {
-          $PayInBankToOwner->DebitedFunds->Amount = str_replace('.', '', number_format($order->price*1.035, 2, '.', ''));
-          $PayInBankToOwner->Fees->Amount = str_replace('.', '', number_format($order->price*0.035, 2, '.', ''));
+        // Si on rembourse pour la première fois
+        if( count($owner->orders_owner()) == 0) {
+          $payIn->DebitedFunds->Amount = str_replace('.', '', number_format($amount, 2, '.', ''));
+          $payIn->Fees->Amount = str_replace('.', '', number_format($amount*0, 2, '.', ''));
+        } else { // sinon
+          if( $order->price >= 150 && $order->price < 300 ) {
+            $PayInBankToOwner->DebitedFunds->Amount = str_replace('.', '', number_format($order->price*1.03, 2, '.', ''));
+            $PayInBankToOwner->Fees->Amount = str_replace('.', '', number_format($order->price*0.03, 2, '.', ''));
+          } elseif( $order->price >= 300 ) {
+            $PayInBankToOwner->DebitedFunds->Amount = str_replace('.', '', number_format($order->price*1.025, 2, '.', ''));
+            $PayInBankToOwner->Fees->Amount = str_replace('.', '', number_format($order->price*0.025, 2, '.', ''));
+          } else {
+            $PayInBankToOwner->DebitedFunds->Amount = str_replace('.', '', number_format($order->price*1.035, 2, '.', ''));
+            $PayInBankToOwner->Fees->Amount = str_replace('.', '', number_format($order->price*0.035, 2, '.', ''));
+          }
         }
 
         $PayInBankToOwner->ExecutionType = "DIRECT";
