@@ -59,14 +59,14 @@ class OrderController extends Controller
    {
     if($request->owner_email == '') {
       $this->validate($request, [
-        'price' => 'required|integer|min:30',
+        'price' => 'required|integer',
         'owner_id' => 'integer|required',
         'file' => 'max:1000',
         'message' => 'string',
       ]);
     } else {
       $this->validate($request, [
-        'price' => 'required|integer|min:30',
+        'price' => 'required|integer',
         'owner_email' => 'email|required',
         'file' => 'max:1000',
         'message' => 'string',
@@ -297,7 +297,7 @@ class OrderController extends Controller
       //print_r($_POST);die();
       if($request->owner_email == '') {
         $this->validate($request, [
-          'price' => 'required|integer|min:30',
+          'price' => 'required|integer',
           'owner_id' => 'integer|required',
           'file' => 'max:1000',
           'message' => 'string',
@@ -305,7 +305,7 @@ class OrderController extends Controller
         ]);
       } else {
         $this->validate($request, [
-          'price' => 'required|integer|min:30',
+          'price' => 'required|integer',
           'owner_email' => 'email|required',
           'file' => 'max:1000',
           'message' => 'string',
