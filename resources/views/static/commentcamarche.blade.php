@@ -43,22 +43,21 @@ active
 									<figcaption class="list-figure-caption"><strong><!-- 1. Je créé --></strong></figcaption>
 									<img class="list-figure-img" src="{{ URL::asset('/images/jecree.png') }}" alt="Ouvrez votre compte VinoTeam">
 								</figure>
-								<p class="list-figure-explanation">Munissez-vous de votre BIC/IBAN et ouvrez votre compte VinoTeam</p>
+								<p class="list-figure-explanation">Ouvrez votre compte et invitez vos amis à rejoindre votre VinoTeam</p>
 							</li>
 							<li class="col-md-6 list-figure-item">
 								<figure class="list-figure-figure figure-2">
 									<figcaption class="list-figure-caption"><strong><!-- 2. J&#39;invite --></strong></figcaption>
 									<img class="list-figure-img" src="{{ URL::asset('/images/jinvite.png') }}" alt="Invitez vos amis à rejoindre votre VinoTeam">
 								</figure>
-								<p class="list-figure-explanation">Invitez vos amis à rejoindre votre VinoTeam
-								</p>
+								<p class="list-figure-explanation">Partagez vos bons plans avec vos amis et centralisez facilement leurs commandes.</p>
 							</li>
 							<li class="col-md-6 list-figure-item">
 								<figure class="list-figure-figure figure-3">
 									<figcaption class="list-figure-caption"><strong><!-- 3. Je collecte --></strong></figcaption>
 									<img class="list-figure-img" src="{{ URL::asset('/images/jedepense.png') }}" alt="Achetez du vin pour vos amis ou demandez-leur de vous acheter du vin où vous voulez">
 								</figure>
-								<p class="list-figure-explanation">Achetez du vin pour vos amis ou demandez-leur de vous acheter du vin où vous voulez : foires aux vins, salon, caviste, vigneron….
+								<p class="list-figure-explanation">Faites des économies en achetant groupé où vous voulez (foire aux vins, internet, vigneron…)
 								</p>
 							</li>
 							<li class="col-md-6 list-figure-item">
@@ -66,7 +65,7 @@ active
 									<figcaption class="list-figure-caption"><strong><!-- 4. Je d&#233;pense --></strong></figcaption>
 									<img class="list-figure-img" src="{{ URL::asset('/images/jecollecte.png') }}" alt="Remboursez-vous ou remboursez-les immédiatement et sans prise de tête.">
 								</figure>
-								<p class="list-figure-explanation">Remboursez-vous ou remboursez-les immédiatement et sans prise de tête. Chacun sait où sont ses bouteilles et peut les récupérer quand il veut ! 
+								<p class="list-figure-explanation">Plus de prise de tête pour récupérer l’argent ou gérer l’inventaire des achats. Avec VinoTeam tout est facile !
 								</p>
 							</li>
 						</ul>
@@ -74,26 +73,31 @@ active
 				</div>
 				<!-- Tab 2 - Tarifs -->
 				<div @if($tab == 'tarifs')class="tab-pane fade in active" @else class="tab-pane fade" @endif id="tarifs">
-                    <div class="container">	
+                    <div class="container">
                         <div class="row">
                             <img class="col-md-6" src="{{ URL::asset('/images/securite01.jpg') }}">
                             <div class="col-md-5">
-                                <p>Avec VinoTeam tout est simple et clair&nbsp;!</p>
+                                <p>Avec VinoTeam vous allez pouvoir faire des économies en organisant facilement des achats groupés de vin ! Notre service est très simple&nbsp;:</p>
                                 <ul class="icons-list">
-                                <li><i class="fa fa-check"></i> Pas de frais de cr&eacute;ation de compte</li>
-                                <li><i class="fa fa-check"></i> Pas de frais sur les remboursements que vous recevez</li>
+                                <li><i class="fa fa-check"></i> Création de compte gratuite</li>
                                 <li><i class="fa fa-check"></i> Pas d&rsquo;abonnement</li>
                                 <li><i class="fa fa-check"></i> Pas d&rsquo;engagement</li>
+                                <li><i class="fa fa-check"></i> Pas de frais sur les remboursements que vous recevez</li>
+                                <li><i class="fa fa-check"></i> Et votre premier remboursement à un ami est gratuit !</li>
                                 </ul>
-                                <p>Ceux ont achet&eacute; du vin pour leurs amis et qui leur demandent un remboursement re&ccedil;oivent exactement la somme qu&rsquo;ils ont demand&eacute;e. Ceux qui remboursent un achat acquittent des frais de gestion minimes de 3.5% de la somme rembours&eacute;e, soit un montant inf&eacute;rieur &agrave; celui d&rsquo;une cagnotte de type Leetchi.</p>
-                                <p>Ces frais de gestion servent notamment &agrave; couvrir les frais financiers support&eacute;s par VinoTeam pour op&eacute;rer la solution de remboursement simplissime que nous mettons &agrave; la disposition de tous les amoureux du vin et de leurs amis.</p>
+                                <p>Celui qui a payé pour le groupe récupère la somme qu’il a avancée. Ceux qui le remboursent acquittent un petit frais de gestion à partir de leur deuxième utilisation de VinoTeam :</p>
+																<ul class="icons-list">
+                                <li><i class="fa fa-check"></i> 2.5% pour les virements de plus de 300€</li>
+                                <li><i class="fa fa-check"></i> 3% pour les virements de 150€ à 300€</li>
+                                <li><i class="fa fa-check"></i> 3.5% pour les virements de moins de 150€ ou les remboursements par carte bancaire</li>
+                                </ul>
                             </div>
                         </div>
                     </div>
                     <br/>
                         <div class="row">
                             <div class="col-md-12">
-                                <p>De plus, ces frais de gestion minimes sont totalement compens&eacute;s par les grosses &eacute;conomies que ceux qui remboursent r&eacute;alisent gr&acirc;ce aux bons plans de leurs amis qui leur ach&egrave;tent du vin (commande group&eacute;e, promotion, etc&hellip;).</p>
+                                <p><p>Ce frais de gestion est inférieur à ceux de tous les services de cagnotte en ligne. Il est minime comparé aux belles économies réalisées grâce à l’achat groupé. Et Vinoteam est tellement plus pratique que n’importe quelle autre solution !</p>
                                 <p>Prenons un exemple.</p>
                             </div>
                             <div>
@@ -108,13 +112,13 @@ active
                             </div>
                             <div class="col-md-12">
                                 <p style="margin-top:20px;">Alors n&rsquo;h&eacute;sitez plus&nbsp;! Plus de compta, plus de prise de t&ecirc;te, comptez sur vos amis pour vous acheter des bons vins au bon prix&nbsp;!</p>
-                            </div> 
+                            </div>
                         </div>
                 </div>
-                   
+
                 <!-- Tab 3 - Sécurité -->
                 <div @if($tab == 'securite')class="tab-pane fade in active" @else class="tab-pane fade" @endif id="securite">
-                    <div class="container"> 
+                    <div class="container">
                        <div class="row">
                             <img class="col-md-6" src="{{ URL::asset('/images/tarif02.jpg') }}">
                             <div class="col-md-5">
@@ -145,10 +149,10 @@ active
                         </div>
                     </div>
                 </div>
-                   
+
                 <!-- Tab 4 - Conditions Générales -->
                 <div @if($tab == 'conditions-generales')class="tab-pane fade in active" @else class="tab-pane fade" @endif id="conditions-generales">
-                    <div class="container"> 
+                    <div class="container">
                        <div class="row">
                             <div class="col-md-12">
                                 <p style="text-align: center; margin: 0cm 0cm 0.0001pt; font-size: 11pt; font-family: Calibri; background: white;" align="center"><span style="font-size: 13.5pt; font-family: Arial; color: #767676;">VinoTeam</span></p>
@@ -247,17 +251,17 @@ active
 		                          <a href="#"><img class="list-figure-img" src="{{ URL::asset('/images/partenaires/bacchus.png') }}"></a>
                                 </figure>
                             </li>
-        
+
                             <li class="col-md-6 list-figure-item">
                                 <figure class="list-figure-figure figure-1">
 		                          <a href="#"><img class="list-figure-img" src="{{ URL::asset('/images/partenaires/vins-et-bieres.png') }}"></a>
                                 </figure>
                             </li>
-        
-                        </ul>          
+
+                        </ul>
                     </div>
-                 
-                 
+
+
 					<h2 class="list-figure-caption">Uniquement sur le web</h2>
                     <div class="article-content-body article-list-figure">
                         <ul class="row list-figure">
@@ -277,8 +281,8 @@ active
                                 <figure class="list-figure-figure figure-3">
                                     <a href="https://www.onsoccupeduvin.com/" target="_blank"><img class="list-figure-img" src="{{ URL::asset('/images/partenaires/on-soccupe-du-vin.png') }}"></a>
                                 </figure>
-                            </li>  
-                        </ul> 
+                            </li>
+                        </ul>
 
                         <ul class="row list-figure">
                             <li class="col-md-4 list-figure-item">
@@ -297,7 +301,7 @@ active
                                 <figure class="list-figure-figure figure-3">
                                     <a href="http://www.vinealove.com/" target="_blank"><img class="list-figure-img" src="{{ URL::asset('/images/partenaires/vinealove.jpg') }}"></a>
                                 </figure>
-                            </li>                    
+                            </li>
                         </ul>
 
                         <ul class="row list-figure">
@@ -316,7 +320,7 @@ active
                                     <a href="https://www.idealwine.com" target="_blank"><img class="list-figure-img" src="{{ URL::asset('/images/partenaires/idealwine.png') }}"></a>
                                 </figure>
                             </li>
-                        </ul>                                            
+                        </ul>
                     </div>
 
                     <h2 class="list-figure-caption">Salons de vignerons</h2>
@@ -327,7 +331,7 @@ active
                                   <a href="http://www2.vigneron-independant.com" target="_blank"><img class="list-figure-img" src="{{ URL::asset('/images/partenaires/vigneron-independant.png') }}"></a>
                                 </figure>
                             </li>
-                        </ul>          
+                        </ul>
                     </div>
 
                 </div>
@@ -373,14 +377,14 @@ active
 	                                        </span>
 	                                    @endif
 		                            </div>
-			                        
+
 			                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                                         @if(Auth::check())
-                                        <input id="email" autocomplete="off" type="email" class="form-control" name="email" value="{{ Auth::user()->email}}" placeholder="exemple@exemple.com"> 
+                                        <input id="email" autocomplete="off" type="email" class="form-control" name="email" value="{{ Auth::user()->email}}" placeholder="exemple@exemple.com">
                                         @elseif(old('email'))
-                                        <input id="email" autocomplete="off" type="email" class="form-control" name="email" value="{{ old('email') }}" placeholder="exemple@exemple.com"> 
+                                        <input id="email" autocomplete="off" type="email" class="form-control" name="email" value="{{ old('email') }}" placeholder="exemple@exemple.com">
                                         @else
-                                        <input id="email" autocomplete="off" type="email" class="form-control" name="email" value="" placeholder="exemple@exemple.com"> 
+                                        <input id="email" autocomplete="off" type="email" class="form-control" name="email" value="" placeholder="exemple@exemple.com">
                                         @endif
 
 		                                @if ($errors->has('email'))
@@ -407,7 +411,7 @@ active
 		                                    </span>
 		                                @endif
 		                            </div>
-			                        
+
 			                        <div class="form-group">
 			                            <div class="col-md-4 col-md-offset-5">
 			                                <input type="hidden" name="parent_id" value="">
@@ -424,7 +428,7 @@ active
                 <!-- Tab 8 - Professionnels du vin -->
                 <div @if($tab == 'professionnels-du-vin')class="tab-pane fade in active" @else class="tab-pane fade" @endif id="professionnels-du-vin">
                     <div class="article-content-body article-list-figure">
-                        <p>Professionnels, vous aussi, participez à la promotion de VinoTeam. En intégrant à votre site web notre flyer numérique renvoyant vers <a href="https://www.vinoteam.fr/">www.vinoteam.fr</a>, vous libérez la capacité d'achat de vos clients pour leurs amis ! Choisissez librement l'image qui correspond le mieux à votre clientèle.<br />Contactez-nous si vous avez besoin de support technique : <a href="mailto:contact@vinoteam.fr">contact@vinoteam.fr</a></p>
+												<p>Professionnels, participez à la promotion de VinoTeam ! Choisissez l'image qui correspond le mieux à votre clientèle et libérez la capacité d'achat groupé de vos clients en l’affichant sur votre site web. Nous sommes à votre disposition si vous avez besoin de support technique : <a href="mailto:contact@vinoteam.fr">contact@vinoteam.fr</a></p>
                     </div>
 
                     <div class="article-content-body article-list-figure">
@@ -448,8 +452,8 @@ active
                                     <a href="https://www.vinoteam.fr/" target="_blank"><img class="list-figure-img" src="{{ URL::asset('/images/Vinoteam03.jpg') }}" alt="VinoTeam - Prenez-en pour vos amis !"></a>
                                     <input type="text" readonly="readonly" class="form-control" value='<a href="https://www.vinoteam.fr" target="_blank"><img src="{{ URL::asset("/images/Vinoteam03.jpg") }}" alt="VinoTeam - Prenez-en pour vos amis !"></a>'>
                                 </figure>
-                            </li>  
-                        </ul> 
+                            </li>
+                        </ul>
 
                         <ul class="row list-figure">
                             <li class="col-md-4 list-figure-item">
@@ -471,7 +475,7 @@ active
                                     <a href="https://www.vinoteam.fr/" target="_blank"><img class="list-figure-img" src="{{ URL::asset('/images/Vinoteam06.jpg') }}" alt="VinoTeam - Prenez-en pour vos amis !"></a>
                                     <input type="text" readonly="readonly" class="form-control" value='<a href="https://www.vinoteam.fr" target="_blank"><img src="{{ URL::asset("/images/Vinoteam06.jpg") }}" alt="VinoTeam - Prenez-en pour vos amis !"></a>'>
                                 </figure>
-                            </li>                    
+                            </li>
                         </ul>
 
                         <ul class="row list-figure">
@@ -481,11 +485,11 @@ active
                                     <input type="text" readonly="readonly" class="form-control" value='<a href="https://www.vinoteam.fr" target="_blank"><img src="{{ URL::asset("/images/Vinoteam07.jpg") }}" alt="VinoTeam - Prenez-en pour vos amis !"></a>'>
                                 </figure>
                             </li>
-                        </ul>                                            
+                        </ul>
                     </div>
-                    
+
                 </div>
-				    
+
 			</div>
 		</div>
             </div><!-- End .row -->

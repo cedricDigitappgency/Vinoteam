@@ -84,11 +84,11 @@
                  <!--<tr style="background-color:#f1f2f2">
                     <td>Frais de gestion</td>
                     <td>{{ number_format($order->price*0.035, 2, '.', '') }}€</td>
-                 </tr>-->
+                 </tr>
                 <tr>
                     <td><strong>Total</strong></td>
                     <td>{{ $priceWtax = number_format($order->price*1.035, 2, '.', '') }}€</td>
-                 </tr>
+                 </tr>-->
               </table>
 
               <div class="form-group{{ $errors->has('chose') ? ' has-error' : '' }}" style="margin-top:20px;">
