@@ -33,23 +33,21 @@ class PostCreateRelationshipEmail
         $user2 = User::find($event->user2Id);
 
         // On n'envoit pas le courriel si le membre n'a pas activé son compte
-        if($user2->emailValidate == 0) {
-          return;
+        if($user2->emailValidate != 0) {
+          // We send a mail to the recipient
+          Mail::send('emails.postCreateRelationship', ['user' => $user1, 'invitedUser' => $user2, 'bodyMessage' => $event->message], function($message) use ($user1, $user2) {
+              // From
+              $message->from(config('vinoteam.noreplay_email'), $user1->firstname.' '.$user1->lastname);
+
+              // To
+              if( $user2->firstname == '' )
+                $message->to($user2->email, $user2->firstname.' '.$user2->lastname);
+              else
+                $message->to($user2->email, $user2->email);
+
+              // Subject
+              $message->subject('Votre VinoTeam s’agrandit');
+          });
         }
-
-        // We send a mail to the recipient
-        Mail::send('emails.postCreateRelationship', ['user' => $user1, 'invitedUser' => $user2, 'bodyMessage' => $event->message], function($message) use ($user1, $user2) {
-            // From
-            $message->from(config('vinoteam.noreplay_email'), $user1->firstname.' '.$user1->lastname);
-
-            // To
-            if( $user2->firstname == '' )
-              $message->to($user2->email, $user2->firstname.' '.$user2->lastname);
-            else
-              $message->to($user2->email, $user2->email);
-
-            // Subject
-            $message->subject('Votre VinoTeam s’agrandit');
-        });
     }
 }
