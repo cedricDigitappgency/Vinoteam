@@ -19,6 +19,7 @@ use Event;
 use App\Events\PostRegistration;
 use App\Events\PaymentInfoWereModified;
 use App\Events\PostRegistrationVerifiyIBAN;
+use App\Events\NotificateFriendsOfNewRegistration;
 use App\Events\VerifyIBAN;
 
 
