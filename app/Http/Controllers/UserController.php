@@ -330,6 +330,11 @@ class UserController extends Controller
       $user->payment_bic = $data['payment_bic'];
       $user->save();
 
+      // Correction d'un bug
+      if( $user->firstname != null && $user->lastname != null && (!isset($user->mangopay_userid) || !isset($user->mangopay_walletid)) )  {
+        Event::fire(new PostRegistration($user->id));
+      }
+
       // Mettre à jour les infos
       //Event::fire(new PaymentInfoWereModified($user->id));
       try {
