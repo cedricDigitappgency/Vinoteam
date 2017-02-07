@@ -44,7 +44,7 @@ class PostPaymentOrderEmail
         try {
           $Mandate = $this->mangopay->Mandates->Get($buyer->mangopay_mandateid);
 
-          if($Mandate->Status == 'FAILED') {
+          if(!isset($buyer->mangopay_mandateid) || !isset($Mandate) || $Mandate->Status == 'FAILED') {
             // envoyer un courriel pour dire qu'on peut pas virer l'argent
             Mail::send('emails.missingUserMandate', ['user' => $buyer], function($message) use ($buyer) {
                 // From

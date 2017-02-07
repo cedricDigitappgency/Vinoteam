@@ -38,7 +38,7 @@ class NotificateFriendsOfNewRegistrationEmail
         $friends = $this->users_friendship->getFriendsOf($user);
         if( count($friends) >= 1 ) {
           foreach($friends as $friend) {
-            Mail::send('emails.inviteFriends', ['user' => $user, 'friend' => $friend], function($message) use ($user, $friend) {
+            Mail::send('emails.NotificateFriendsOfNewRegistration', ['user' => $user, 'friend' => $friend], function($message) use ($user, $friend) {
                 // From
                 $message->from(config('vinoteam.noreplay_email'), config('vinoteam.sitename'));
 
