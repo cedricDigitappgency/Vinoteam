@@ -328,45 +328,43 @@ $( document ).ready(function() {
 
 
     $('body').on('click','.addWineClick',function(){
-       
-        var mini = '';
-        $.get(base_url+"wines/"+$('#wine_id_'+order_items_cnt).val(), function(data, status){
-             console.log(data);
-             if(data[0].path != null && data[0].path != undefined){
-                 var urlFile = 'https://storage.googleapis.com/vino-team.appspot.com/storage'+data[0].path;
-             }else{
-                  var urlFile = base_url+'images/bouteille-vinoteam.png';
-              }
+      var mini = '';
+      $.get(base_url+"wines/"+$('#wine_id_'+order_items_cnt).val(), function(data, status){
+           console.log(data);
+           if(data[0].path != null && data[0].path != undefined){
+               var urlFile = 'https://storage.googleapis.com/vino-team.appspot.com/storage'+data[0].path;
+           }else{
+                var urlFile = base_url+'images/bouteille-vinoteam.png';
+            }
 
-              mini = '<div class="col-md-12" style="border: #d4d4d4 2px;"><div class="col-md-5"><img style="max-height:100px;" id="img_mini" src="'+urlFile+'"></div><div class="col-md-7" style="padding-top:5px;"><div id="name_cru_mini">'+data[0].name_cru+' </div>';
-              mini = mini + '<div id="year_mini">'+data[0].year+'</div>';
-              mini = mini + '<div id="region_mini">'+data[0].region+'</div>';
-              mini = mini + '<div id="productor_mini">'+data[0].productor+'</div></div></div>';
-              console.log(mini);
+            mini = '<div class="col-md-12" style="border: #d4d4d4 2px;"><div class="col-md-5"><img style="max-height:100px;" id="img_mini" src="'+urlFile+'"></div><div class="col-md-7" style="padding-top:5px;"><div id="name_cru_mini">'+data[0].name_cru+' </div>';
+            mini = mini + '<div id="year_mini">'+data[0].year+'</div>';
+            mini = mini + '<div id="region_mini">'+data[0].region+'</div>';
+            mini = mini + '<div id="productor_mini">'+data[0].productor+'</div></div></div>';
+            console.log(mini);
 
-              console.log(mini);
-              console.log(order_items_cnt);
-              var html = '<tr id="tr_'+order_items_cnt+'">';
-              html = html+'<td class="lien-fiche"><a id="miniature" data-toggle="modal" data-target="#choseWine_'+order_items_cnt+'" disabled>'+mini+'</a></td>';
-              html= html+'<td style="vertical-align:middle; text-align:center;"><input type="number" class="form-control quantity" name="quantity_'+order_items_cnt+'" id="quantity_'+order_items_cnt+'"></td>';
-              html = html+'<td style="vertical-align:middle; text-align:center;"><input type="text" class="form-control price_unit" data-id="'+order_items_cnt+'" name="price_unit_'+order_items_cnt+'" id="price_unit_'+order_items_cnt+'"></td>';
-              html = html+'<td style="vertical-align:middle; text-align:center;"><select class="form-control" name="container_'+order_items_cnt+'" id="container_'+order_items_cnt+'" >';
-              html = html+'<option value="75cl">75cl</option>';
-              html=html+'<option value="37,5cl">37,5cl</option>';
-              html=html+'<option value="1,5L">1,5L</option>';
-              html=html+'<option value="autres">autres</option>';
-              html=html+'</select></td>';
-              html=html+'<td style="vertical-align:middle; text-align:center;"><input type="text" class="form-control price_total" data-id="'+order_items_cnt+'" id="price_total_'+order_items_cnt+'"></td>'
-              html = html+ '<td style="vertical-align:middle; text-align:center;"><button type="button" data-id="'+order_items_cnt+'" class="btn del_item btn-danger btn-lg"><span class="glyphicon glyphicon-trash"></span></button></td></tr>';
-              $('#data').append(html);
-              loadSelectWines(order_items_cnt);
-              order_items_cnt++;
-              $('#order_item_number_new').val(order_items_cnt);
-              closeModal = false;
-              //$('#choseWine_'+(order_items_cnt-1)).children().children().children('.modal-header').children('.close').removeClass('close');
-              $('#choseWine_'+(order_items_cnt-1)).children().children().children('.modal-footer').children('.addWineClick').removeClass('addWineClick');
-        });
-       
+            console.log(mini);
+            console.log(order_items_cnt);
+            var html = '<tr id="tr_'+order_items_cnt+'">';
+            html = html+'<td class="lien-fiche"><a id="miniature" data-toggle="modal" data-target="#choseWine_'+order_items_cnt+'" disabled>'+mini+'</a></td>';
+            html= html+'<td style="vertical-align:middle; text-align:center;"><input type="number" class="form-control quantity" name="quantity_'+order_items_cnt+'" id="quantity_'+order_items_cnt+'"></td>';
+            html = html+'<td style="vertical-align:middle; text-align:center;"><input type="text" class="form-control price_unit" data-id="'+order_items_cnt+'" name="price_unit_'+order_items_cnt+'" id="price_unit_'+order_items_cnt+'"></td>';
+            html = html+'<td style="vertical-align:middle; text-align:center;"><select class="form-control" name="container_'+order_items_cnt+'" id="container_'+order_items_cnt+'" >';
+            html = html+'<option value="75cl">75cl</option>';
+            html=html+'<option value="37,5cl">37,5cl</option>';
+            html=html+'<option value="1,5L">1,5L</option>';
+            html=html+'<option value="autres">autres</option>';
+            html=html+'</select></td>';
+            html=html+'<td style="vertical-align:middle; text-align:center;"><input type="text" class="form-control price_total" data-id="'+order_items_cnt+'" id="price_total_'+order_items_cnt+'"></td>'
+            html = html+ '<td style="vertical-align:middle; text-align:center;"><button type="button" data-id="'+order_items_cnt+'" class="btn del_item btn-danger btn-lg"><span class="glyphicon glyphicon-trash"></span></button></td></tr>';
+            $('#data').append(html);
+            loadSelectWines(order_items_cnt);
+            order_items_cnt++;
+            $('#order_item_number_new').val(order_items_cnt);
+            closeModal = false;
+            //$('#choseWine_'+(order_items_cnt-1)).children().children().children('.modal-header').children('.close').removeClass('close');
+            $('#choseWine_'+(order_items_cnt-1)).children().children().children('.modal-footer').children('.addWineClick').removeClass('addWineClick');
+      });
     });
 
     $('body').on('click','.del_item',function(){
@@ -465,29 +463,27 @@ $( document ).ready(function() {
     $('body').on('change','.wine_id_select',function(){
         console.log('load wine info');
         console.log($(this).val());
-        if($(this).val() != 0){
-            var id_order_item = $(this).attr('data-id');
-            resetWineForm(id_order_item);
-           $.get(base_url+"wines/"+$(this).val(), function(data, status){
-               console.log(data);
+        var id_order_item = $(this).attr('data-id');
+        resetWineForm(id_order_item);
+       $.get(base_url+"wines/"+$(this).val(), function(data, status){
+           console.log(data);
 
-               $(this).find('option[value="'+$(this).val()+'"]').prop('selected', true);
-                console.log(id_order_item);
-                $('#name_cru_'+id_order_item).val(data[0].name_cru);
-                $('#year_'+id_order_item).val(data[0].year);
-                $('#region_'+id_order_item).val(data[0].region);
-                $('#productor_'+id_order_item).val(data[0].productor);
-                if(data[0].file_id != null){
-                    $('#file_show_'+id_order_item).find('.thumbnail').removeClass('hidden');
-                    $('#file_show_'+id_order_item).find('img').attr('src', data[0].path);
-                    $('#file_show_'+id_order_item).find('h4').html(data[0].name);
-                    $('#file_id_'+id_order_item).val(data[0].file_id);
-                }
-                $('#file_'+id_order_item).val();
-                $('#message_'+id_order_item).text(data[0].message);
 
-            });
-        }
+            console.log(id_order_item);
+            $('#name_cru_'+id_order_item).val(data[0].name_cru);
+            $('#year_'+id_order_item).val(data[0].year);
+            $('#region_'+id_order_item).val(data[0].region);
+            $('#productor_'+id_order_item).val(data[0].productor);
+            if(data[0].file_id != null){
+                $('#file_show_'+id_order_item).find('.thumbnail').removeClass('hidden');
+                $('#file_show_'+id_order_item).find('img').attr('src', data[0].path);
+                $('#file_show_'+id_order_item).find('h4').html(data[0].name);
+                $('#file_id_'+id_order_item).val(data[0].file_id);
+            }
+            $('#file_'+id_order_item).val();
+            $('#message_'+id_order_item).text(data[0].message);
+
+        });
     });
 
     function loadOrders(){
