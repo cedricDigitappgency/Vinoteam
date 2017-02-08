@@ -42,7 +42,9 @@ Route::get('/contact', 'StaticController@Contact');
 
 Route::post('/contact-nous', 'StaticController@SendMail');
 
-Route::get('/event-regular', 'StaticController@RegularEvent');
+Route::get('/events-hourly', 'StaticController@HourlyEvents');
+
+Route::get('/events-daily', 'StaticController@DailyEvents');
 
 Route::get('/orders/paiement', 'StaticController@Payment');
 /**

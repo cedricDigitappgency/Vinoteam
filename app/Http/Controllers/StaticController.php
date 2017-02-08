@@ -80,7 +80,7 @@ class StaticController extends Controller
         return redirect('/comment-ca-marche')->with('status', 'Votre email a bien été envoyé.');
     }
 
-    public function RegularEvent()
+    public function HourlyEvents()
     {
         $orders = $this->order->AllOrders();
 
@@ -108,27 +108,29 @@ class StaticController extends Controller
             //     Event::fire(new PostFailedPayIn($order->id));
             // }
         }
+    }
 
-        $users_unregistered = \App\User::where('firstname', '')->orWhere('lastname', '')->get();
-        foreach($users_unregistered as $user) {
-          Event::fire(new CronUserUnregistered($user->id));
-        }
+    public function DailyEvents() {
+      $users_unregistered = \App\User::where('firstname', '')->orWhere('lastname', '')->get();
+      foreach($users_unregistered as $user) {
+        Event::fire(new CronUserUnregistered($user->id));
+      }
 
-        $users_without_transactions = $this->users->getAllUsersWithoutTransactions();
-        foreach($users_without_transactions as $user) {
-          Event::fire(new CronUserWithoutTransactions($user->id));
-        }
+      $users_without_transactions = $this->users->getAllUsersWithoutTransactions();
+      foreach($users_without_transactions as $user) {
+        Event::fire(new CronUserWithoutTransactions($user->id));
+      }
 
-        $users_with_owner_once = $this->users->getAllUsersOwnerSingleTransaction();
-        foreach($users_without_transactions as $user) {
-          Event::fire(new CronOwnerWithSingleTransaction($user->id));
-        }
+      $users_with_owner_once = $this->users->getAllUsersOwnerSingleTransaction();
+      foreach($users_without_transactions as $user) {
+        Event::fire(new CronOwnerWithSingleTransaction($user->id));
+      }
 
-        $users_with_buyer_once = $this->users->getAllUsersBuyerSingleTransaction();
-        foreach($users_without_transactions as $user) {
-          Event::fire(new CronBuyerWithSingleTransaction($user->id));
-        }
+      $users_with_buyer_once = $this->users->getAllUsersBuyerSingleTransaction();
+      foreach($users_without_transactions as $user) {
+        Event::fire(new CronBuyerWithSingleTransaction($user->id));
+      }
 
-        // $users_owner_paid_twice_by_card =
+      // $users_owner_paid_twice_by_card =
     }
 }
