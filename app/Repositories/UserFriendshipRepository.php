@@ -39,15 +39,17 @@ class UserFriendshipRepository
   }
 
   public function deleteFriendship(User $user1, User $user2) {
-    UserFriendship::where([
-      ['user1Id', '=', $user1->id],
-      ['user2Id', '=', $user2->id],
-    ])->delete();
+    // UserFriendship::where([
+    //   ['user1Id', '=', $user1->id],
+    //   ['user2Id', '=', $user2->id],
+    // ])->delete();
+    UserFriendship::where('user1Id', $user1->id)->where('user2Id', $user2->id)->delete();
 
-    UserFriendship::where([
-      ['user1Id', '=', $user2->id],
-      ['user2Id', '=', $user1->id],
-    ])->delete();
+    // UserFriendship::where([
+    //   ['user1Id', '=', $user2->id],
+    //   ['user2Id', '=', $user1->id],
+    // ])->delete();
+    UserFriendship::where('user1Id', $user2->id)->where('user2Id', $user1->id)->delete();
 
     return true;
   }
