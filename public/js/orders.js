@@ -484,8 +484,7 @@ $( document ).ready(function() {
         var wine_tmp_id = $(this).val();
 
         $('#wine_id_'+id_order_item+' option').removeAttr('selected');
-        // console.log($('#wine_id_'+id_order_item+' option').filter(':selected').text());
-        $('#wine_id_'+id_order_item+' option:eq('+wine_tmp_id+')').attr('selected', 'selected');
+        $('#wine_id_'+id_order_item+' option[value="'+wine_tmp_id+'"]').attr('selected', 'selected');
 
         if($(this).val() != 0){
             resetWineForm(id_order_item);
