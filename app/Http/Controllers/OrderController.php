@@ -193,8 +193,6 @@ class OrderController extends Controller
                 $wine_id = $request->$prop_wine_id_tmp;
             }
 
-            echo $wine_id;
-            exit;
             Order_item::create([
               'order_id' => $order->id,
               'wine_id' => $wine_id,
@@ -651,7 +649,7 @@ class OrderController extends Controller
             return redirect('/orders/paiement');
         }
         else{
-            die('Erreur avec le 3Dsecure');
+            return redirect('orders/'.$orderId.'/paymentCB')->with('alerts', 'Le paiement par 3D Secure a échoué. Veuillez réessayer.');
         }
     }
 
@@ -671,16 +669,12 @@ class OrderController extends Controller
                 $updatedCardRegister = $this->mangopay->CardRegistrations->Update($cardRegister);
                 if ($updatedCardRegister->Status != \MangoPay\CardRegistrationStatus::Validated || !isset($updatedCardRegister->CardId)){
                     //die('<div style="color:red;">Cannot create card. Payment has not been created.<div>');
-                    return redirect('orders/'.$orderId.'/paymentCB')->with('Impossible de créer la carte, veuillez vérifier vos informations !');
+                    return redirect('orders/'.$orderId.'/paymentCB')->with('alerts', 'Impossible de créer la carte, veuillez vérifier vos informations !');
                 }
                 $card = $this->mangopay->Cards->Get($updatedCardRegister->CardId);
 
                 $owner->mangopay_cardId = $updatedCardRegister->CardId;
                 $owner->save();
-
-                if (!isset($amount)) {
-                    die('<div style="color:red;">No payment has been started<div>');
-                }
             }else{
                 $card = $this->mangopay->Cards->Get($order->owner->mangopay_cardId);
             }
@@ -762,7 +756,7 @@ class OrderController extends Controller
                             . $createdPayIn->ResultCode . ')'
                         .'</div>';*/
 
-                return redirect('orders/'.$orderId.'/paymentCB');
+                return redirect('orders/'.$orderId.'/paymentMethod')->with('alerts', 'Impossible de procéder au paiement. Veuillez contacter l\'administrateur.');
             }
         } catch (\MangoPay\Libraries\ResponseException $e) {
 
@@ -772,7 +766,7 @@ class OrderController extends Controller
                         .'<br/><br/>Details: '; print_r($e->GetErrorDetails())
                 .'</div>'; */
 
-          return redirect('orders/'.$orderId.'/paymentCB')->with('errors', 'Impossible de procéder au paiement. Veuillez contacter l\'administrateur.');
+          return redirect('orders/'.$orderId.'/paymentCB')->with('alerts', 'Impossible de procéder au paiement. Veuillez contacter l\'administrateur.');
         }
 
     }
