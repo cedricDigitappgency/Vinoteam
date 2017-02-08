@@ -8,7 +8,7 @@ active
 
 @section('content')
 <!-- <script src="{{ URL::asset('js/jquery-3.1.0.min.js') }}" type="text/javascript"></script> -->
-<script src="{{ URL::asset('js/orders.js') }}" type="text/javascript"></script>
+<script src="{{ URL::asset('js/orders.js?v='.time()) }}" type="text/javascript"></script>
 
 <div id="container">
 
@@ -210,9 +210,8 @@ active
                             </div>
                         </div>
                         <div id="order_item_zone" class="panel-body">
-
                              @for ($i = 1; $i < 100; $i++)
-                                @if( old('wine_id_'.$i) == null && (old('name_cru_'.$i) != null  || old('year_'.$i) != null || old('region_'.$i) != null || old('productor_'.$i) != null || old('file_'.$i) != null || old('message_'.$i) != null || old('quantity_'.$i) != null || old('container_'.$i) != null || old('price_unit') != null))
+                                @if(old('wine_id_'.$i) == null && (old('name_cru_'.$i) != null  || old('year_'.$i) != null || old('region_'.$i) != null || old('productor_'.$i) != null || old('file_'.$i) != null || old('message_'.$i) != null || old('quantity_'.$i) != null || old('container_'.$i) != null || old('price_unit') != null))
                                    @include('wines.modal_new_wine')
                                 @elseif(old('wine_id_'.$i) != null)
                                     @include('wines.modal_add_wine')

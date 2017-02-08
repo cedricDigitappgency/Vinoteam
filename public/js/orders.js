@@ -29,7 +29,9 @@ $( document ).ready(function() {
 
     function changeOldMini() {
       $('.wine_old_mini').each(function(index,value){
+        console.log($(value).attr('data-id'));
         $.get(base_url+"wines/"+$(value).attr('data-id'), function(data, status){
+          console.log(data[0]);
            if(data[0].path == null){
                var url = base_url+'images/bouteille-vinoteam.png';
            }
@@ -42,6 +44,7 @@ $( document ).ready(function() {
             mini = mini + '<div id="productor_mini">'+data[0].productor+'</div></div></div>';
             $(value).append(mini);
         });
+
       });
 
     }
@@ -97,7 +100,7 @@ $( document ).ready(function() {
     });
 
     $('body').on('click','#add_order_item',function(){
-      console.log(order_items_cnt);
+      // console.log(order_items_cnt);
 
       test = resultTemplate.replace(/countid/gm, order_items_cnt);
       $('#order_item_zone').append(test);
@@ -111,12 +114,12 @@ $( document ).ready(function() {
       });
 
     $('body').on('click','.addNewWineClick',function(){
-      console.log(order_items_cnt);
-      console.log($('#file_'+$(this).attr('data-id')));
+      // console.log(order_items_cnt);
+      // console.log($('#file_'+$(this).attr('data-id')));
       var files = $('#file_'+$(this).attr('data-id'))[0].files;
-        console.log('file change');
+        // console.log('file change');
         if (files.length > 0) {
-            console.log('file ok');
+            // console.log('file ok');
             // On part du principe qu'il n'y qu'un seul fichier
             // étant donné que l'on a pas renseigné l'attribut "multiple"
             var file = files[0];
@@ -150,7 +153,7 @@ $( document ).ready(function() {
       $('#addNewWine_'+(order_items_cnt-1)).children().children().children('.modal-header').children('.close').removeClass('close');
       $('#addNewWine_'+(order_items_cnt-1)).children().children().children('.modal-footer').children('.addNewWineClick').removeClass('addNewWineClick');
       //console.log($('#addNewWine_'+(order_items_cnt-1)).children().children().children('.modal-header').children('.close'));
-      console.log($('#addNewWine_'+(order_items_cnt-1)).children().children().children('.modal-footer').children('.addNewWineClick'));
+      // console.log($('#addNewWine_'+(order_items_cnt-1)).children().children().children('.modal-footer').children('.addNewWineClick'));
     });
 
     $('body').on('click','.addNewWine',function(){
@@ -192,52 +195,52 @@ $( document ).ready(function() {
     });
 
     $('body').on('click','.comment-ca-marche',function(){
-        console.log('comment-ca-marche');
+        // console.log('comment-ca-marche');
         window.location.href = base_url+'comment-ca-marche?tab=comment-ca-marche';
 
     });
 
     $('body').on('click','.tarifs',function(){
-        console.log('tarifs');
+        // console.log('tarifs');
         window.location.href = base_url+'comment-ca-marche?tab=tarifs';
 
     });
 
     $('body').on('click','.securite',function(){
-        console.log('securite');
+        // console.log('securite');
         window.location.href = base_url+'comment-ca-marche?tab=securite';
 
     });
 
     $('body').on('click','.conditions-generales',function(){
-        console.log('conditions generales');
+        // console.log('conditions generales');
         window.location.href = base_url+'comment-ca-marche?tab=conditions-generales';
 
     });
 
     $('body').on('click','.partenaires',function(){
-        console.log('parts');
+        // console.log('parts');
         window.location.href = base_url+'comment-ca-marche?tab=partenaires';
 
     });
 
     $('body').on('click','.contact',function(){
-        console.log('contact');
+        // console.log('contact');
         window.location.href = base_url+'comment-ca-marche?tab=contact';
 
     });
 
     $('body').on('click','.professionnels-du-vin',function(){
-        console.log('pro du vins');
+        // console.log('pro du vins');
         window.location.href = base_url+'comment-ca-marche?tab=professionnels-du-vin';
 
     });
 
     $('body').on('click','.addNewWineClickCave',function(){
         var files = $('#file')[0].files;
-        console.log('file change');
+        // console.log('file change');
         if (files.length > 0) {
-            console.log('file ok');
+            // console.log('file ok');
             // On part du principe qu'il n'y qu'un seul fichier
             // étant donné que l'on a pas renseigné l'attribut "multiple"
             var file = files[0];
@@ -251,7 +254,7 @@ $( document ).ready(function() {
         $('#productor_mini_text').text($('#productor').val());
         $('#region_mini_text').text($('#region').val());
         $('#typeWine').val('new');
-        console.log($('#miniature'));
+        // console.log($('#miniature'));
         $('#miniature').show();
         $('#miniature').attr('data-target','#addNewWine');
     });
@@ -295,11 +298,11 @@ $( document ).ready(function() {
 
     function upload(files,id){
         var f = files[0];
-        console.log(files);
+        // console.log(files);
         //document.getElementById('file_'+id).val(files[0]);
-        console.log(document.getElementById('file_'+id).files);
+        // console.log(document.getElementById('file_'+id).files);
         $('#file_'+id).value = f;
-        console.log($('#file_'+id)[0].files);
+        // console.log($('#file_'+id)[0].files);
 
     }
 
@@ -307,7 +310,7 @@ $( document ).ready(function() {
 
         var mini = '';
       $.get(base_url+"wines/"+$('#wine_id').val(), function(data, status){
-           console.log(data);
+          //  console.log(data);
            if(data[0].path != null && data[0].path != undefined){
                var urlFile = 'https://storage.googleapis.com/vino-team.appspot.com/storage'+data[0].path;
            }else{
@@ -318,7 +321,7 @@ $( document ).ready(function() {
             $('#year_mini_text').text(data[0].year);
             $('#productor_mini_text').text(data[0].region);
             $('#region_mini_text').text(data[0].productor);
-            console.log($('#miniature'));
+            // console.log($('#miniature'));
             $('#miniature').show();
             $('#miniature').attr('data-target','#choseWine');
 
@@ -329,8 +332,14 @@ $( document ).ready(function() {
 
     $('body').on('click','.addWineClick',function(){
       var mini = '';
+      var wine_id = $('#wine_id_'+order_items_cnt).val();
+
+      if(wine_id == 0) {
+        return;
+      }
+
       $.get(base_url+"wines/"+$('#wine_id_'+order_items_cnt).val(), function(data, status){
-           console.log(data);
+          //  console.log(data);
            if(data[0].path != null && data[0].path != undefined){
                var urlFile = 'https://storage.googleapis.com/vino-team.appspot.com/storage'+data[0].path;
            }else{
@@ -341,10 +350,10 @@ $( document ).ready(function() {
             mini = mini + '<div id="year_mini">'+data[0].year+'</div>';
             mini = mini + '<div id="region_mini">'+data[0].region+'</div>';
             mini = mini + '<div id="productor_mini">'+data[0].productor+'</div></div></div>';
-            console.log(mini);
+            // console.log(mini);
 
-            console.log(mini);
-            console.log(order_items_cnt);
+            // console.log(mini);
+            // console.log(order_items_cnt);
             var html = '<tr id="tr_'+order_items_cnt+'">';
             html = html+'<td class="lien-fiche"><a id="miniature" data-toggle="modal" data-target="#choseWine_'+order_items_cnt+'" disabled>'+mini+'</a></td>';
             html= html+'<td style="vertical-align:middle; text-align:center;"><input type="number" class="form-control quantity" name="quantity_'+order_items_cnt+'" id="quantity_'+order_items_cnt+'"></td>';
@@ -355,10 +364,10 @@ $( document ).ready(function() {
             html=html+'<option value="1,5L">1,5L</option>';
             html=html+'<option value="autres">autres</option>';
             html=html+'</select></td>';
-            html=html+'<td style="vertical-align:middle; text-align:center;"><input type="text" class="form-control price_total" data-id="'+order_items_cnt+'" id="price_total_'+order_items_cnt+'"></td>'
+            html=html+'<td style="vertical-align:middle; text-align:center;"><input type="text" name="price_total_'+order_items_cnt+'" class="form-control price_total" data-id="'+order_items_cnt+'" id="price_total_'+order_items_cnt+'"></td>'
             html = html+ '<td style="vertical-align:middle; text-align:center;"><button type="button" data-id="'+order_items_cnt+'" class="btn del_item btn-danger btn-lg"><span class="glyphicon glyphicon-trash"></span></button></td></tr>';
             $('#data').append(html);
-            loadSelectWines(order_items_cnt);
+            loadSelectWines(order_items_cnt, wine_id);
             order_items_cnt++;
             $('#order_item_number_new').val(order_items_cnt);
             closeModal = false;
@@ -389,27 +398,33 @@ $( document ).ready(function() {
         }
     });
 
-    function loadSelectWines(id){
+    function loadSelectWines(id,id_selected=0){
         $('#wine_id_'+id).empty();
         $('#wine_id_'+id).append('<option value="0">Choisissez un vin existant</option>');
+
         $.get(base_url+"user/"+$('#user_id').val()+"/wines", function(data, status){
-            console.log(data);
-            console.log(status);
             $.each(data,function(index,value){
               if( value.year == '' ) {
-                $('#wine_id_'+id).append('<option value="'+value.id+'">'+value.name_cru+'</option>');
+                if(value.id == id_selected) {
+                  $('#wine_id_'+id).append('<option value="'+value.id+'" selected="selected">'+value.name_cru+'</option>');
+                } else {
+                  $('#wine_id_'+id).append('<option value="'+value.id+'">'+value.name_cru+'</option>');
+                }
               } else {
-                $('#wine_id_'+id).append('<option value="'+value.id+'">'+value.name_cru+' ('+value.year+')</option>');
+                if(value.id == id_selected) {
+                  $('#wine_id_'+id).append('<option value="'+value.id+'" selected="selected">'+value.name_cru+' ('+value.year+')</option>');
+                } else {
+                  $('#wine_id_'+id).append('<option value="'+value.id+'">'+value.name_cru+' ('+value.year+')</option>');
+                }
               }
             });
         });
-
     }
 
     function loadSelectWinesCave(){
         $.get(base_url+"user/"+$('#user_id').val()+"/wines", function(data, status){
-            console.log(data);
-            console.log(status);
+            // console.log(data);
+            // console.log(status);
             $.each(data,function(index,value){
               if( value.year == '' ) {
                 $('#wine_id').append('<option value="'+value.id+'">'+value.name_cru+'</option>');
@@ -461,34 +476,47 @@ $( document ).ready(function() {
     }
 
     $('body').on('change','.wine_id_select',function(){
-        console.log('load wine info');
-        console.log($(this).val());
+        // console.log('load wine info');
+        // console.log($(this).val());
+
         var id_order_item = $(this).attr('data-id');
-        resetWineForm(id_order_item);
-       $.get(base_url+"wines/"+$(this).val(), function(data, status){
-           console.log(data);
 
+        var wine_tmp_id = $(this).val();
 
-            console.log(id_order_item);
-            $('#name_cru_'+id_order_item).val(data[0].name_cru);
-            $('#year_'+id_order_item).val(data[0].year);
-            $('#region_'+id_order_item).val(data[0].region);
-            $('#productor_'+id_order_item).val(data[0].productor);
-            if(data[0].file_id != null){
-                $('#file_show_'+id_order_item).find('.thumbnail').removeClass('hidden');
-                $('#file_show_'+id_order_item).find('img').attr('src', data[0].path);
-                $('#file_show_'+id_order_item).find('h4').html(data[0].name);
-                $('#file_id_'+id_order_item).val(data[0].file_id);
-            }
-            $('#file_'+id_order_item).val();
-            $('#message_'+id_order_item).text(data[0].message);
+        $('#wine_id_'+id_order_item+' option').removeAttr('selected');
+        // console.log($('#wine_id_'+id_order_item+' option').filter(':selected').text());
+        $('#wine_id_'+id_order_item+' option:eq('+wine_tmp_id+')').attr('selected', 'selected');
 
-        });
+        if($(this).val() != 0){
+            resetWineForm(id_order_item);
+
+           $.get(base_url+"wines/"+$(this).val(), function(data, status){
+              //  console.log(data);
+
+                // console.log(id_order_item);
+                $('#name_cru_'+id_order_item).val(data[0].name_cru);
+                $('#year_'+id_order_item).val(data[0].year);
+                $('#region_'+id_order_item).val(data[0].region);
+                $('#productor_'+id_order_item).val(data[0].productor);
+                if(data[0].file_id != null){
+                    $('#file_show_'+id_order_item).find('.thumbnail').removeClass('hidden');
+                    $('#file_show_'+id_order_item).find('img').attr('src', data[0].path);
+                    $('#file_show_'+id_order_item).find('h4').html(data[0].name);
+                    $('#file_id_'+id_order_item).val(data[0].file_id);
+                }
+                $('#file_'+id_order_item).val();
+                $('#message_'+id_order_item).text(data[0].message);
+
+            });
+          $('#choseWine_'+id_order_item).find('.addWineClick').removeAttr('disabled');
+        } else {
+          $('#choseWine_'+id_order_item).find('.addWineClick').attr('disabled', 'disabled');
+        }
     });
 
     function loadOrders(){
         $.get(base_url+"orders/owner/"+$('#user_id').val(),function(data, status){
-            console.log(data);
+            // console.log(data);
             if(data.length != 0){
 
                 $.each(data,function(index,value){
@@ -513,11 +541,11 @@ $( document ).ready(function() {
             }
             else{
                 $('#dataOwner').parent().hide();
-                console.log('hide');
+                // console.log('hide');
             }
         });
         $.get(base_url+"orders/buyer/"+$('#user_id').val(),function(data, status){
-            console.log(data);
+            // console.log(data);
             if(data.length != 0){
                 $.each(data,function(index,value){
                     var html = '<tr>';
@@ -540,11 +568,11 @@ $( document ).ready(function() {
             }
             else{
                 $('#dataBuyer').parent().hide();
-                console.log('hide');
+                // console.log('hide');
             }
         });
         $.get(base_url+"orders/owner/validated/"+$('#user_id').val(),function(data, status){
-            console.log(data);
+            // console.log(data);
             if(data.length != 0){
                 $.each(data,function(index,value){
                     var html = '<tr>';
@@ -559,11 +587,11 @@ $( document ).ready(function() {
             }
             else{
                 $('#dataOwnerValidated').parent().hide();
-                console.log('hide');
+                // console.log('hide');
             }
         });
         $.get(base_url+"orders/buyer/validated/"+$('#user_id').val(),function(data, status){
-            console.log(data);
+            // console.log(data);
             if(data.length != 0){
                 $.each(data,function(index,value){
                     var html = '<tr>';
@@ -578,7 +606,7 @@ $( document ).ready(function() {
             }
             else{
                 $('#dataBuyerValidated').parent().hide();
-                console.log('hide');
+                // console.log('hide');
             }
         });
 
@@ -587,7 +615,7 @@ $( document ).ready(function() {
 
     $('body').on('click','#history',function(){
        $.get(base_url+"houses/"+$(this).attr('data-id')+"/history",function(data, status){
-            console.log(data);
+            // console.log(data);
             if(data.length != 0){
                 $('.zoneMouvement').empty();
                 var html = '<table class="table table-striped"><thead><tr class="redtable"><th class="text-center">Date</th><th class="text-center">Quantité</th><th class="text-center">Emplacement</th><th class="text-center">Auteur de la modification</th></tr>';
@@ -617,11 +645,11 @@ $( document ).ready(function() {
         $.get(base_url+'js/modalMouvement.html', function(data) {
 
             $('#modalHistoryZone').html(data);
-            console.log(templateHistory);
+            // console.log(templateHistory);
         });
 
         $.get(base_url+"houses/owner/"+$('#user_id').val(),function(data, status){
-            console.log(data);
+            // console.log(data);
             if(data.length != 0){
                 $.each(data,function(index,value){
                     if(value.path == null || value.path == undefined){
@@ -652,12 +680,12 @@ $( document ).ready(function() {
             }
             else{
                 $('#dataOwnerHouses').parent().hide();
-                console.log('hide');
+                // console.log('hide');
             }
 
         });
         $.get(base_url+"houses/buyer/"+$('#user_id').val(),function(data, status){
-            console.log(data);
+            // console.log(data);
             if(data.length != 0){
                 $.each(data,function(index,value){
                     if(value.path == null || value.path == undefined){
@@ -687,7 +715,7 @@ $( document ).ready(function() {
             }
             else{
                 $('#dataBuyerHouses').parent().hide();
-                console.log('hide');
+                // console.log('hide');
             }
         });
         // $.get(base_url+"houses/empty/owner/"+$('#user_id').val(),function(data, status){
@@ -755,12 +783,12 @@ $( document ).ready(function() {
 
 
     $('body').on('change','.wine_id_select_house',function(){
-        console.log('load wine info');
-        console.log($(this).val());
+        // console.log('load wine info');
+        // console.log($(this).val());
 
         resetWineFormHouse();
        $.get(base_url+"wines/"+$(this).val(), function(data, status){
-           console.log(data);
+          //  console.log(data);
 
             $('#name_cru').val(data[0].name_cru);
             $('#year').val(data[0].year);
@@ -781,9 +809,9 @@ $( document ).ready(function() {
 
     $('body').on('change','.file', function (e) {
         var files = $(this)[0].files;
-        console.log('file change');
+        // console.log('file change');
         if (files.length > 0) {
-            console.log('file ok');
+            // console.log('file ok');
             // On part du principe qu'il n'y qu'un seul fichier
             // étant donné que l'on a pas renseigné l'attribut "multiple"
             var file = files[0],
@@ -800,7 +828,7 @@ $( document ).ready(function() {
 
                 var html = '<div id="alert_size" class="alert alert-danger" role="alert"> Fichier trop volumineux </div>';
                 $(this).after(html);
-                console.log('fichier trop volumineux');
+                // console.log('fichier trop volumineux');
                 $(this).val('');
             }
         }
@@ -816,9 +844,9 @@ $( document ).ready(function() {
 
     $('body').on('change','.file_order', function (e) {
         var files = $(this)[0].files;
-        console.log('file change');
+        // console.log('file change');
         if (files.length > 0) {
-            console.log('file ok');
+            // console.log('file ok');
             // On part du principe qu'il n'y qu'un seul fichier
             // étant donné que l'on a pas renseigné l'attribut "multiple"
             var file = files[0],
@@ -834,7 +862,7 @@ $( document ).ready(function() {
             else{
                 var html = '<div id="alert_size_order" class="alert alert-danger" role="alert"> Fichier trop volumineux </div>';
                 $(this).after(html);
-                console.log('fichier trop volumineux');
+                // console.log('fichier trop volumineux');
                 $(this).val('');
             }
         }
@@ -852,9 +880,9 @@ $( document ).ready(function() {
 
     $('body').on('change','.file_house', function (e) {
         var files = $(this)[0].files;
-        console.log('file change');
+        // console.log('file change');
         if (files.length > 0) {
-            console.log('file ok');
+            // console.log('file ok');
             // On part du principe qu'il n'y qu'un seul fichier
             // étant donné que l'on a pas renseigné l'attribut "multiple"
             var file = files[0],
@@ -870,7 +898,7 @@ $( document ).ready(function() {
             else{
                 var html = '<div id="alert_size_house" class="alert alert-danger" role="alert"> Fichier trop volumineux </div>';
                 $(this).after(html);
-                console.log('fichier trop volumineux');
+                // console.log('fichier trop volumineux');
                 $(this).val('');
             }
         }
@@ -883,8 +911,5 @@ $( document ).ready(function() {
         $('#file').val('');
         $('#file_show_house').find('.thumbnail').addClass('hidden');
     });
-
-
-
 
 });
