@@ -10,10 +10,14 @@ use App\Http\Controllers\Controller;
 use Event;
 use App\Events\CheckPayin;
 use App\Events\CronUserUnregistered;
+use App\Events\CronUserWithoutTransactions;
+use App\Events\CronOwnerWithSingleTransaction;
+use App\Events\CronBuyerWithSingleTransaction;
 use App\Events\PostFailedPayIn;
 use App\Events\PostSuccessPayIn;
 
 use App\Repositories\OrderRepository;
+use App\Repositories\UserRepository;
 
 class StaticController extends Controller
 {
@@ -25,10 +29,11 @@ class StaticController extends Controller
      *
      * @return void
      */
-    public function __construct(OrderRepository $order, \MangoPay\MangoPayApi $mangopay)
+    public function __construct(OrderRepository $order, \MangoPay\MangoPayApi $mangopay, UserRepository $users)
     {
         $this->mangopay = $mangopay;
         $this->order = $order;
+        $this->users = $users;
     }
 
     public function CommentCaMarche(Request $request) {
