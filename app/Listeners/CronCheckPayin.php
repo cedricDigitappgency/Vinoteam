@@ -2,15 +2,15 @@
 
 namespace App\Listeners;
 
-use App\Events\CheckPayin;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
 use App\Order;
 use App\User;
 
+use Mail;
 use Event;
-use App\Events\PostPaymentOrder;
+use App\Events\CheckPayin;
 
 class CronCheckPayin
 {

@@ -11,7 +11,6 @@ use App\User;
 
 use Event;
 use App\Events\CronUserUnregistered;
-
 use App\Repositories\UserFriendshipRepository;
 
 class CronUserUnregisteredAction

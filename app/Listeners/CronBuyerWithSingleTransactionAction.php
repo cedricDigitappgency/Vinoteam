@@ -11,7 +11,6 @@ use App\User;
 
 use Event;
 use App\Events\CronBuyerWithSingleTransaction;
-
 use App\Repositories\UserFriendshipRepository;
 
 class CronBuyerWithSingleTransactionAction

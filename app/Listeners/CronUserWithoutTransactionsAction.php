@@ -41,8 +41,8 @@ class CronUserWithoutTransactionsAction
         $diffJours = $dDiff->days;
         $diffMois = $dDiff->m;
 
-        // Si la personne n'a pas validé son compte on la relance
-        if($diffJours == 15 || $diffMois == 1 || $diffMois == 3 || $diffMois == 12) {
+        // Si la personne n'a pas validé son compte on la relances
+        if($diffJours == 15 || $diffMois == 1 || $diffMois == 3 || $diffMois == 12) {
           Mail::send('emails.notificateUserWithoutTransactions', ['user' => $user, 'diffJours' => $diffJours, 'diffMois' => $diffMois], function($message) use ($user) {
               // From
               $message->from(config('vinoteam.noreplay_email'), config('vinoteam.sitename'));
