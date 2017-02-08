@@ -49,7 +49,7 @@ active
           <tbody>
             @foreach ($friends as $friend)<tr>
 							@if($friend)
-              <td>@if($friend->emailValidate == 1) {{ $friend->firstname }} @endif</td>
+              <td>@if($friend->firstname != '') {{ $friend->firstname }} @endif</td>
               <td>@if($friend->lastname != '') {{ $friend->lastname }} @endif</td>
               <td>{{ $friend->email }}</td>
               <td>@if($friend->firstname == '' && $friend->lastname == '')<a href="{{ url('/ma-vinoteam/supprimer-un-ami/'.$friend->id) }}">Supprimer de ma VinoTeam</a>@endif</td>
