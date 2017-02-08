@@ -27,7 +27,7 @@
 
         <div class="col-md-12">
     		<div class="col-lg-12 col-md-12 col-sm-12">
-                <img src="http://dev.vinoteam.fr/images/powered-by-mangopay.png">
+                <img src="{{ URL::asset('/images/powered-by-mangopay.png') }}">
     		</div>
         </div>
         <div class="col-md-12">

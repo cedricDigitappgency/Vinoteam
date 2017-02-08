@@ -27,15 +27,15 @@
                                 <option {{ (old('buyer_id') == null ? (($house[0]->buyer_id == Auth::user()->id) ? 'selected' : '') : ((old('buyer_id') == Auth::user()->id) ? 'selected' : '')) }} value="{{ Auth::user()->id }}">{{ Auth::user()->firstname }} {{ Auth::user()->lastname }}</option>
                                 @foreach ($users as $user)
                                 <option {{ (old('buyer_id') == null ? (($house[0]->buyer_id == $user->id) ? 'selected' : '') : ((old('buyer_id') == $user->id) ? 'selected' : '')) }} value="{{ $user->id }}">
-                                @if( $user->firstname ) 
+                                @if( $user->firstname )
                                 {{ $user->firstname }} {{ $user->lastname }} ({{ $user->email }})
                                 @else
                                 {{ $user->email }}
                                 @endif
                                 </option>
                                 @endforeach
-                            </select>                                    
-                                
+                            </select>
+
                             @if ($errors->has('buyer_id'))
                             <span class="help-block">
                                 <strong>{{ $errors->first('buyer_id') }}</strong>
@@ -79,7 +79,7 @@
                         <a href="#" id="miniature" data-toggle="modal" data-target="#addNewWine">
                             <div class="col-md-12" style="border: #d4d4d4 2px;" >
                                 <div class="col-md-5">
-                                    <img style="max-height:100px;" id="img_mini" src="{{ $house[0]->path == null ? url('/images/bouteille-vinoteam.png') : $house[0]->path }}">
+                                    <img style="max-height:100px;" id="img_mini" src="{{ $house[0]->path == null ? url('/images/bouteille-vinoteam.png') : 'https://storage.googleapis.com/vino-team.appspot.com/storage'.$house[0]->path }}">
                                 </div>
 
                                 <div class="col-md-7" style="padding-top:5px;">
@@ -90,7 +90,7 @@
                                 </div>
                             </div>
                         </a>
-                    </div>              
+                    </div>
                     <div class="form-group">
                         <div class="col-md-4 col-md-offset-5">
                             <input type="hidden" id="user_id" name="user_id" value="{{ $user_id }}">
@@ -112,7 +112,7 @@
                                     <div class="row">
                                         <div id="file_show" class="col-md-12">
                                             <div class="thumbnail text-center" style="margin:auto; width: 50%;">
-                                                <img src="{{ $house[0]->path == null ? url('/images/bouteille-vinoteam.png') : $house[0]->path }}" alt="">
+                                                <img src="{{ $house[0]->path == null ? url('/images/bouteille-vinoteam.png') : 'https://storage.googleapis.com/vino-team.appspot.com/storage'.$house[0]->path }}" alt="">
                                             </div>
                                         </div>
                                     </div>
@@ -216,7 +216,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <!-- Modal -->
                     <div class="modal fade" id="choseWine" tabindex="-1" role="dialog" aria-labelledby="choseWineLabel">
                         <div class="modal-dialog" role="document">
@@ -225,8 +225,8 @@
                                     <button type="button" class="close" data-id="countid" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                     <h4 class="modal-title" id="choseWineLabel">Choisir un vin existant</h4>
                                 </div>
-                                
-                                <div class="modal-body">       
+
+                                <div class="modal-body">
                                     <div class="form-group{{ $errors->has('wine_id') ? ' has-error' : '' }}">
                                         <label for="wine_id" class="col-md-4 control-label">Vin *</label>
 
@@ -243,9 +243,9 @@
                                                 </span>
                                             @endif
                                         </div>
-                                    </div> 
+                                    </div>
 
-                                    <div style="clear:both;"></div>           
+                                    <div style="clear:both;"></div>
 
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-primary" data-dismiss="modal">Fermer</button>
@@ -256,12 +256,12 @@
                     </div>
                 </form>
                 <br/>
-                
+
             </div>
         </div>
         <hr/>
     </div>
 </div>
 
-        
+
 @endsection
