@@ -117,7 +117,7 @@ class UserController extends Controller
     {
         $user = $request->user();
         if( $user->emailValidate != 1 ) {
-          $this->redirect('/users/profile');
+          return redirect('/users/profile');
         }
 
         return response()->json($this->users->showUser($id));
@@ -187,7 +187,7 @@ class UserController extends Controller
       }
 
       $user->update($data);
-
+      
       //return response()->json($user);
       if(isset($_GET['new']) && $_GET['new'] == 1) {
           // on notifie les amis du nouveau membre qu'il peuvent partager des vins avec
@@ -209,7 +209,7 @@ class UserController extends Controller
       //var_dump($request->user());
       $user = $request->user();
       if( $user->emailValidate != 1 ) {
-        $this->redirect('/users/profile');
+        return redirect('/users/profile');
       }
 
       // if (Gate::denies('update-user-profile', $user)) {
@@ -274,7 +274,7 @@ class UserController extends Controller
         }
 
         if( $user->emailValidate != 1 ) {
-          $this->redirect('/users/profile');
+          return redirect('/users/profile');
         }
 
         if(!$user->emailValidate) {
