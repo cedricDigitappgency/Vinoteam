@@ -502,7 +502,7 @@ class OrderController extends Controller
         $user = $request->user();
 
         if( $user->emailValidate != 1 ) {
-          $this->redirect('/users/profile');
+          return redirect('/users/profile');
         }
 
         return view('orders.buyerlist', [
@@ -517,7 +517,7 @@ class OrderController extends Controller
         $user = $request->user();
 
         if( $user->emailValidate != 1 ) {
-          $this->redirect('/users/profile');
+            return redirect('/users/profile');
         }
 
         return view('orders.ownerlist', [
