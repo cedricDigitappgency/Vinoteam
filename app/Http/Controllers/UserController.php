@@ -460,7 +460,7 @@ class UserController extends Controller
             return redirect('/ma-vinoteam/inviter-des-amis')/*->with('errors', 'Email déjà validé. ')*/;
         }
         else{
-            if($user->mangopay_userid OR $user->firstname == null OR $user->lastname == null) {
+            if($user->mangopay_userid == null OR $user->firstname == null OR $user->lastname == null) {
               return redirect('/users/profile');
             }
 
