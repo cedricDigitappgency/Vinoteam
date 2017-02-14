@@ -54,6 +54,7 @@ function Autotab(box, longueur, texte)
             <p>Vos coordonnées bancaires servent uniquement à recevoir des remboursements ou rembourser à vos amis des sommes que vous leur devez.</p>
             <p>Personne d’autre que vous n’y a accès. Vous seul pouvez autoriser un paiement. Vos données sont stockées dans un entrepôt numérique sécurisé externe à VinoTeam.</p>
             <p>Vous pouvez enregistrer vos coordonnées bancaires dès maintenant ou plus tard (lorsque vous devrez récupérer ou effectuer un remboursement).</p>
+            <p>Vous pourrez aussi choisir de rembourser vos amis par carte bancaire.</p>
 
             <form class="form" role="form" method="POST" action="{{ url('/users/' . $user->id . '/paymentInfo') }}">
               {{ csrf_field() }}
