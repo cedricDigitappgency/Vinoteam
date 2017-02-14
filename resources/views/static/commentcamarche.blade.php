@@ -502,7 +502,7 @@ active
   <div class="row">
     <div class="call-action call-action-boxed clearfix" style="margin-bottom:20px;">
       <!-- Call Action Text -->
-      <h2 class="primary col-md-10 col-sm-9 col-xs-12">Remboursez-vous en un clic. Gérez facilement vos bouteilles et celles de vos proches.<br/>Faites-vous plaisir et rendez service à vos amis !</h2>
+      <h2 class="primary col-md-10 col-sm-9 col-xs-12">L’achat groupé de vin devient facile ! Partagez vos bons plans vins. Centralisez les commandes de vos amis. Remboursez-vous de vos dépenses en un clic. <br />Faites des économies et faites-leur plaisir !</h2>
       <!-- Call Action Button -->
       <div class="button-side col-md-2 col-sm-3 col-xs-12" style="margin-top:4px;"><a href="{{ url('register') }}" class="btn-system btn-large">Je m'inscris</a></div>
     </div>

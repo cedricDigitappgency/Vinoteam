@@ -255,7 +255,7 @@ class VinoTeamController extends Controller
         $dest = \App\User::find($destinataire);
 
         // If the destinataire is not registered
-        Event::fire(new InviteFriends($user->id, $dest->id));
+        //Event::fire(new InviteFriends($user->id, $dest->id));
 
         Mail::send('emails.proposerBonPlan', ['user' => $user, 'destinataire' => $dest, 'bodyMessage' => $request->message], function($message) use ($dest, $user) {
             // From
