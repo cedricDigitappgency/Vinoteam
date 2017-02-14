@@ -1,7 +1,7 @@
 <?php return array (
   'app' =>
   array (
-    'debug' => true,
+    'debug' => false,
     'url' => 'http://vino-team.appspot.com/',
     'timezone' => 'UTC',
     'locale' => 'fr',
@@ -197,7 +197,8 @@
       'mysql' =>
       array (
         'driver' => 'mysql',
-        'unix_socket' => '/cloudsql/vino-team:europe-west1:vinoteam-sql-2',
+        'unix_socket' => '/cloudsql/vino-team:europe-west1:vinoteam-sql-1',
+        // 'unix_socket' => '/cloudsql/vino-team:europe-west1:vinoteam-sql-2',
         'host' => '',
         'database' => 'vinoteam',
         'username' => 'root',
@@ -391,10 +392,15 @@
     ),
     'mangopay' =>
     array (
-      'env' => 'sandbox',
-      'key' => 'digitappgency',
-      'secret' => 'TFDL8WpADa29MR5QJZh6aTNzmT5ViC0wzCokXxdv2vZbTNWBR5',
+      'env' => 'production',
+      'key' => 'vinoteam',
+      'secret' => 'gUOTmeQoyUXDaBOXdRjJO3UE0Jkeeyea5eBMLuPVcym2wJnvHU',
     ),
+    // array (
+    //   'env' => 'sandbox',
+    //   'key' => 'digitappgency',
+    //   'secret' => 'TFDL8WpADa29MR5QJZh6aTNzmT5ViC0wzCokXxdv2vZbTNWBR5',
+    // ),
   ),
   'session' =>
   array (
