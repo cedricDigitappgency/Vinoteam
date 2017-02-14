@@ -122,15 +122,20 @@ active
              <div class="row">
                   <img class="col-md-5" src="{{ URL::asset('/images/tarif02.jpg') }}">
                   <div class="col-md-6">
-                      <p>VinoTeam est un outil de pr&eacute;l&egrave;vement / virement SEPA entre particuliers. <br><br> Cette technique de paiement, qui existe depuis longtemps pour les gros op&eacute;rateurs (par exemple les op&eacute;rateurs d&rsquo;&eacute;nergie ou de t&eacute;l&eacute;phonie), a &eacute;t&eacute; autoris&eacute;e entre particuliers en 2015, au terme de la r&eacute;vision de la Directive 2007/64/CE du Parlement europ&eacute;en et du Conseil du 13 novembre 2007 concernant les services de paiement dans le march&eacute; int&eacute;rieur (DSP2)</p>
-                      <p>C&rsquo;est la raison pour laquelle vous avez besoin d&rsquo;enregistrer votre BIC / IBAN pour utiliser VinoTeam, et de remplir vos d&eacute;tails personnels, conform&eacute;ment &agrave; la loi bancaire.</p>
+                      <p>En plus de tous les outils qui permettent de g&eacute;rer facilement un achat group&eacute; de vin, VinoTeam vous permet recevoir des remboursements de la part des membres de votre Vinoteam.</p>
+                      <p>Ceux-ci peuvent vous rembourser par virement VinoTeam ou par carte bancaire.<br /> Pour r&eacute;cup&eacute;rer les sommes qui vous sont dues, vous devrez avoir renseign&eacute; les coordonn&eacute;es bancaires o&ugrave; nous pouvons vous les transf&eacute;rer (IBAN).</p>
                   </div>
               </div>
               <br/>
               <div class="row">
                   <div class="col-md-6">
-                      <p>Vous ma&icirc;trisez totalement vos transactions VinoTeam.<br />Vous ne pouvez &eacute;mettre une demande de remboursement qu&rsquo;&agrave; un membre de votre VinoTeam ou &agrave; une personne que vous invitez &agrave; en faire partie.<br />R&eacute;ciproquement, vous ne pouvez rembourser qu&rsquo;un membre de votre VinoTeam qui vous en adresse la demande.<br />Il vous est bien s&ucirc;r demand&eacute; de valider chaque remboursement qui vous est demand&eacute; pour que le virement correspondant soit effectu&eacute; au b&eacute;n&eacute;fice du membre de votre VinoTeam qui vous le demande.</p>
-                      <p>Les plus haut standards de s&eacute;curit&eacute; s&rsquo;appliquent aux transactions que vous r&eacute;alisez via VinoTeam. Vos coordonn&eacute;es bancaires sont en lieu s&ucirc;r.<br />Elles ne sont pas dans les serveurs VinoTeam.<br />Elles sont chiffr&eacute;es et conserv&eacute;es &agrave; distance dans un coffre-fort num&eacute;rique.<br />Vos donn&eacute;es personnelles et bancaires ne sont jamais communiqu&eacute;es, ni aux membres de votre VinoTeam, ni &agrave; aucune autre personne.</p>
+                      <p>Les sommes qui transitent par VinoTeam sont totalement s&eacute;curis&eacute;es.<br /> Un remboursement ne peut être effectu&eacute; qu&rsquo; &agrave; l&rsquo;initiative d&rsquo;un membre du groupe et avec l&rsquo;accord de celui auquel il est adress&eacute;.<br /> Il est obligatoire de valider chaque transaction.</p>
+                      <p>Les plus haut standards de s&eacute;curit&eacute; s&rsquo;appliquent &agrave; toutes les transactions que vous r&eacute;alisez.<br /> Vos coordonn&eacute;es bancaires sont en lieu s&ucirc;r.<br />
+                      <ul>
+                          <li>Elles ne sont pas dans les serveurs VinoTeam.</li>
+                          <li>Elles sont chiffr&eacute;es et conservées &agrave; distance dans un coffre-fort num&eacute;rique.</li>
+                          <li>Vos donn&eacute;es personnelles et bancaires ne sont jamais communiqu&eacute;es, ni aux membres de votre VinoTeam, ni &agrave; aucune autre personne.</li>
+                      </ul></p>
                   </div>
                   <img class="col-md-5" src="{{ URL::asset('/images/securite02.jpg') }}">
               </div>
