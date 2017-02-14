@@ -59,14 +59,14 @@ class OrderController extends Controller
    {
     if($request->owner_email == '') {
       $this->validate($request, [
-        'price' => 'required|integer|min:30',
+        'price' => 'required|integer',
         'owner_id' => 'integer|required',
         'file' => 'max:1000',
         'message' => 'string',
       ]);
     } else {
       $this->validate($request, [
-        'price' => 'required|integer|min:30',
+        'price' => 'required|integer',
         'owner_email' => 'email|required',
         'file' => 'max:1000',
         'message' => 'string',
@@ -165,9 +165,9 @@ class OrderController extends Controller
         $prop_price_unit_tmp = 'price_unit_'.$i;
         $prop_file_id_tmp = 'file_id_'.$i;
 
-        if($request->$prop_wine_id_tmp != NULL || $request->$prop_name_cru_tmp != NULL){
+        if($request->$prop_wine_id_tmp != NULL || $request->$prop_name_cru_tmp != NULL) {
 
-            if($request->$prop_wine_id_tmp == NULL && $request->$prop_name_cru_tmp != NULL){
+            if($request->$prop_wine_id_tmp == NULL && $request->$prop_name_cru_tmp != NULL) {
 
               if($request->hasFile('file_'.$i) && $request->file('file_'.$i)->isValid()){
                 $nameFile = time().str_random(20).'.'.$request->file('file_'.$i)->guessExtension();
@@ -177,8 +177,8 @@ class OrderController extends Controller
                       'path' => '/uploads/wines/'.$nameFile,
                       'name' => $nameFile,
                   ])->id;
-
               }
+
               $wine = Wine::create([
                 'name_cru' => $request->$prop_name_cru_tmp,
                 'year' => $request->$prop_year_tmp,
@@ -192,14 +192,14 @@ class OrderController extends Controller
             else if($request->$prop_wine_id_tmp != NULL){
                 $wine_id = $request->$prop_wine_id_tmp;
             }
-              Order_item::create([
-                'order_id' => $order->id,
-                'wine_id' => $wine_id,
-                'quantity' => $request->$prop_quantity_tmp,
-                'container' => $request->$prop_container_tmp,
-                'price_unit' => $request->$prop_price_unit_tmp,
-              ]);
 
+            Order_item::create([
+              'order_id' => $order->id,
+              'wine_id' => $wine_id,
+              'quantity' => $request->$prop_quantity_tmp,
+              'container' => $request->$prop_container_tmp,
+              'price_unit' => $request->$prop_price_unit_tmp,
+            ]);
         }
       }
 
@@ -220,7 +220,6 @@ class OrderController extends Controller
             'users' => $this->users_friendship->getFriendsOf($request->user()),
             'wines' => $this->wines->userWines($request->user()),
             'user_id' => $request->user()->id,
-
         ]);
     }
 
@@ -297,7 +296,7 @@ class OrderController extends Controller
       //print_r($_POST);die();
       if($request->owner_email == '') {
         $this->validate($request, [
-          'price' => 'required|integer|min:30',
+          'price' => 'required|integer',
           'owner_id' => 'integer|required',
           'file' => 'max:1000',
           'message' => 'string',
@@ -305,7 +304,7 @@ class OrderController extends Controller
         ]);
       } else {
         $this->validate($request, [
-          'price' => 'required|integer|min:30',
+          'price' => 'required|integer',
           'owner_email' => 'email|required',
           'file' => 'max:1000',
           'message' => 'string',
@@ -500,6 +499,12 @@ class OrderController extends Controller
 
     public function OrderBuyerList(Request $request)
     {
+        $user = $request->user();
+
+        if( $user->emailValidate != 1 ) {
+          return redirect('/users/profile');
+        }
+
         return view('orders.buyerlist', [
             'mode' => 1,
             'order_count' => count($this->orders->forBuyer($request->user()->id)),
@@ -509,6 +514,12 @@ class OrderController extends Controller
 
     public function OrderOwnerList(Request $request)
     {
+        $user = $request->user();
+
+        if( $user->emailValidate != 1 ) {
+            return redirect('/users/profile');
+        }
+
         return view('orders.ownerlist', [
             'mode' => 1,
             'order_count' => count($this->orders->forOwner($request->user()->id)),
@@ -638,7 +649,7 @@ class OrderController extends Controller
             return redirect('/orders/paiement');
         }
         else{
-            die('Erreur avec le 3Dsecure');
+            return redirect('orders/'.$orderId.'/paymentCB')->with('alerts', 'Le paiement par 3D Secure a échoué. Veuillez réessayer.');
         }
     }
 
@@ -648,6 +659,8 @@ class OrderController extends Controller
         $amount = $order->price;
         $currency = 'EUR';
 
+        $owner = \App\User::find($order->owner_id);
+
         try{
             if($order->owner->mangopay_cardId == null || $this->mangopay->Cards->Get($order->owner->mangopay_cardId)->Validity != 'VALID'){
                 //die($cardRegisterId);
@@ -656,17 +669,12 @@ class OrderController extends Controller
                 $updatedCardRegister = $this->mangopay->CardRegistrations->Update($cardRegister);
                 if ($updatedCardRegister->Status != \MangoPay\CardRegistrationStatus::Validated || !isset($updatedCardRegister->CardId)){
                     //die('<div style="color:red;">Cannot create card. Payment has not been created.<div>');
-                    return redirect('orders/'.$orderId.'/paymentCB')->with('Impossible de créer la carte, veuillez vérifier vos informations !');
+                    return redirect('orders/'.$orderId.'/paymentCB')->with('alerts', 'Impossible de créer la carte, veuillez vérifier vos informations !');
                 }
                 $card = $this->mangopay->Cards->Get($updatedCardRegister->CardId);
 
-                $owner = \App\User::find($order->owner_id);
                 $owner->mangopay_cardId = $updatedCardRegister->CardId;
                 $owner->save();
-
-                if (!isset($amount)) {
-                    die('<div style="color:red;">No payment has been started<div>');
-                }
             }else{
                 $card = $this->mangopay->Cards->Get($order->owner->mangopay_cardId);
             }
@@ -676,11 +684,20 @@ class OrderController extends Controller
             $payIn->CreditedWalletId = $order->owner->mangopay_walletid;
             $payIn->AuthorId = $order->owner->mangopay_userid;
             $payIn->DebitedFunds = new \MangoPay\Money();
-            $payIn->DebitedFunds->Amount = str_replace('.', '', number_format($amount*1.035, 2, '.', ''));
             $payIn->DebitedFunds->Currency = $currency;
             $payIn->Fees = new \MangoPay\Money();
-            $payIn->Fees->Amount = str_replace('.', '', number_format($amount*0.035, 2, '.', ''));
             $payIn->Fees->Currency = $currency;
+
+            $nb_of_owner = \App\Order::where('owner_id', $owner->id)->where('status', 'inprogress')->count();
+
+            // Si on rembourse pour la première fois
+            if( $nb_of_owner == 0) {
+              $payIn->DebitedFunds->Amount = str_replace('.', '', number_format($amount, 2, '.', ''));
+              $payIn->Fees->Amount = str_replace('.', '', number_format($amount*0, 2, '.', ''));
+            } else {
+              $payIn->DebitedFunds->Amount = str_replace('.', '', number_format($amount*1.035, 2, '.', ''));
+              $payIn->Fees->Amount = str_replace('.', '', number_format($amount*0.035, 2, '.', ''));
+            }
 
             $payIn->PaymentDetails = new \MangoPay\PayInPaymentDetailsCard();
             $payIn->PaymentDetails->CardType = $card->CardType;
@@ -739,7 +756,7 @@ class OrderController extends Controller
                             . $createdPayIn->ResultCode . ')'
                         .'</div>';*/
 
-                return redirect('orders/'.$orderId.'/paymentCB');
+                return redirect('orders/'.$orderId.'/paymentMethod')->with('alerts', 'Impossible de procéder au paiement. Veuillez contacter l\'administrateur.');
             }
         } catch (\MangoPay\Libraries\ResponseException $e) {
 
@@ -749,7 +766,7 @@ class OrderController extends Controller
                         .'<br/><br/>Details: '; print_r($e->GetErrorDetails())
                 .'</div>'; */
 
-          return redirect('orders/'.$orderId.'/paymentCB')->with('errors', 'Impossible de procéder au paiement. Veuillez contacter l\'administrateur.');
+          return redirect('orders/'.$orderId.'/paymentCB')->with('alerts', 'Impossible de procéder au paiement. Veuillez contacter l\'administrateur.');
         }
 
     }
@@ -836,11 +853,28 @@ class OrderController extends Controller
 
         $PayInBankToOwner->DebitedFunds = new \MangoPay\Money();
         $PayInBankToOwner->DebitedFunds->Currency = "EUR";
-        $PayInBankToOwner->DebitedFunds->Amount = str_replace('.', '', number_format($order->price*1.035, 2, '.', ''));
 
         $PayInBankToOwner->Fees = new \MangoPay\Money();
         $PayInBankToOwner->Fees->Currency = "EUR";
-        $PayInBankToOwner->Fees->Amount = str_replace('.', '', number_format($order->price*0.035, 2, '.', ''));
+
+        $nb_of_owner = \App\Order::where('owner_id', $owner->id)->where('status', 'inprogress')->count();
+
+        // Si on rembourse pour la première fois
+        if( $nb_of_owner == 0 ) {
+          $PayInBankToOwner->DebitedFunds->Amount = str_replace('.', '', number_format($order->price, 2, '.', ''));
+          $PayInBankToOwner->Fees->Amount = str_replace('.', '', number_format($order->price*0, 2, '.', ''));
+        } else { // sinon
+          if( $order->price >= 150 && $order->price < 300 ) {
+            $PayInBankToOwner->DebitedFunds->Amount = str_replace('.', '', number_format($order->price*1.03, 2, '.', ''));
+            $PayInBankToOwner->Fees->Amount = str_replace('.', '', number_format($order->price*0.03, 2, '.', ''));
+          } elseif( $order->price >= 300 ) {
+            $PayInBankToOwner->DebitedFunds->Amount = str_replace('.', '', number_format($order->price*1.025, 2, '.', ''));
+            $PayInBankToOwner->Fees->Amount = str_replace('.', '', number_format($order->price*0.025, 2, '.', ''));
+          } else {
+            $PayInBankToOwner->DebitedFunds->Amount = str_replace('.', '', number_format($order->price*1.035, 2, '.', ''));
+            $PayInBankToOwner->Fees->Amount = str_replace('.', '', number_format($order->price*0.035, 2, '.', ''));
+          }
+        }
 
         $PayInBankToOwner->ExecutionType = "DIRECT";
         $PayInBankToOwner->ExecutionDetails = new \MangoPay\PayInExecutionDetailsDirect();
@@ -879,7 +913,7 @@ class OrderController extends Controller
       ]);
       }
 
-      // Event::fire(new PostPaymentOrder($orderId));
+      Event::fire(new PostPaymentOrder($orderId));
 
       return redirect('/orders/paiement');
     }

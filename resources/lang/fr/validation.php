@@ -94,8 +94,16 @@ return [
     */
 
     'custom'               => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        // 'attribute-name' => [
+        //     'rule-name' => 'custom-message',
+        // ],
+        'owner_id' => [
+          'integer' => 'Vous devez sélectionner un membre de votre VinoTeam',
+          'required' => 'Vous devez sélectionner un membre de votre VinoTeam'
+        ],
+        'owner_email' => [
+          'email' => 'Vous devez saisir un courriel valide',
+          'required' => 'Vous devez saisir un courriel valide'
         ],
     ],
 

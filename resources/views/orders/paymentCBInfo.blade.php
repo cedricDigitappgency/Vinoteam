@@ -16,6 +16,12 @@
     <p class="exemple"><i class="fa fa-credit-card" aria-hidden="true"></i> Paiement par carte bancaire</p>
     <hr/>
 
+    @if (session('alerts'))<div class="col-md-12">
+        <div class="alert alert-danger">
+            {{ session('alerts') }}
+        </div>
+    </div>@endif
+    
     <div class="container">
         <div class="row">
             <div class="col-md-12">

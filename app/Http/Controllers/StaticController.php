@@ -9,10 +9,15 @@ use App\Http\Controllers\Controller;
 
 use Event;
 use App\Events\CheckPayin;
+use App\Events\CronUserUnregistered;
+use App\Events\CronUserWithoutTransactions;
+use App\Events\CronOwnerWithSingleTransaction;
+use App\Events\CronBuyerWithSingleTransaction;
 use App\Events\PostFailedPayIn;
 use App\Events\PostSuccessPayIn;
 
 use App\Repositories\OrderRepository;
+use App\Repositories\UserRepository;
 
 class StaticController extends Controller
 {
@@ -24,10 +29,11 @@ class StaticController extends Controller
      *
      * @return void
      */
-    public function __construct(OrderRepository $order ,\MangoPay\MangoPayApi $mangopay)
+    public function __construct(OrderRepository $order, \MangoPay\MangoPayApi $mangopay, UserRepository $users)
     {
         $this->mangopay = $mangopay;
         $this->order = $order;
+        $this->users = $users;
     }
 
     public function CommentCaMarche(Request $request) {
@@ -79,7 +85,7 @@ class StaticController extends Controller
         return redirect('/comment-ca-marche')->with('status', 'Votre email a bien été envoyé.');
     }
 
-    public function RegularEvent()
+    public function HourlyEvents()
     {
         $orders = $this->order->AllOrders();
 
@@ -98,14 +104,38 @@ class StaticController extends Controller
               \MangoPay\Libraries\Logs::Debug('MangoPay\Exception Message', $e->GetMessage());
             }
 
-            if($PayIn->Status=="SUCCEEDED")
-            {
-                Event::fire(new PostSuccessPayIn($order->id));
-            }
-            else if($PayIn->Status=="FAILED")
-            {
-                Event::fire(new PostFailedPayIn($order->id));
-            }
+            // if($PayIn->Status=="SUCCEEDED")
+            // {
+            //     Event::fire(new PostSuccessPayIn($order->id));
+            // }
+            // else if($PayIn->Status=="FAILED")
+            // {
+            //     Event::fire(new PostFailedPayIn($order->id));
+            // }
         }
+    }
+
+    public function DailyEvents() {
+      $users_unregistered = \App\User::where('firstname', '')->orWhere('lastname', '')->get();
+      foreach($users_unregistered as $user) {
+        Event::fire(new CronUserUnregistered($user->id));
+      }
+
+      $users_without_transactions = $this->users->getAllUsersWithoutTransactions();
+      foreach($users_without_transactions as $user) {
+        Event::fire(new CronUserWithoutTransactions($user->id));
+      }
+
+      $users_with_owner_once = $this->users->getAllUsersOwnerSingleTransaction();
+      foreach($users_without_transactions as $user) {
+        Event::fire(new CronOwnerWithSingleTransaction($user->id));
+      }
+
+      $users_with_buyer_once = $this->users->getAllUsersBuyerSingleTransaction();
+      foreach($users_without_transactions as $user) {
+        Event::fire(new CronBuyerWithSingleTransaction($user->id));
+      }
+
+      // $users_owner_paid_twice_by_card =
     }
 }

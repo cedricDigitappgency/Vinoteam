@@ -26,7 +26,7 @@ active
       <p>
         <form class="form" role="form" method="POST" action="{{ url('/ma-vinoteam/rechercher-un-ami') }}">
           {{ csrf_field() }}
-
+        <!--
           <div class="form-group{{ $errors->has('search') ? ' has-error' : '' }}">
             <input autocomplete="off" type="text" class="form-control" name="search" value="{{ old('search') }}" placeholder="Adresse email...">
             @if ($errors->has('search'))
@@ -35,7 +35,7 @@ active
             </span>
             @endif
           </div>
-
+        -->
           <div class="row">
             <div class="col-md-6 col-sm-12 form-group{{ $errors->has('firstname') ? ' has-error' : '' }}">
                 <input id="firstname" autocomplete="off" type="text" class="form-control" name="firstname" value="{{ old('firstname') }}" placeholder="Prénom...">

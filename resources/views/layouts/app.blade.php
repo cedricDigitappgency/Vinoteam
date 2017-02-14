@@ -268,7 +268,7 @@
         <div class="copyright-section">
           <div class="row">
             <div class="col-md-6">
-              <p>&copy; 2016 VinoTeam</p>
+              <p>&copy; 2016 VinoTeam - Version 2</p>
             </div>
 
             <div class="col-md-6">

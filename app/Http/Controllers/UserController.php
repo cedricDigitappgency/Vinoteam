@@ -19,6 +19,7 @@ use Event;
 use App\Events\PostRegistration;
 use App\Events\PaymentInfoWereModified;
 use App\Events\PostRegistrationVerifiyIBAN;
+use App\Events\NotificateFriendsOfNewRegistration;
 use App\Events\VerifyIBAN;
 
 
@@ -116,7 +117,7 @@ class UserController extends Controller
     {
         $user = $request->user();
         if( $user->emailValidate != 1 ) {
-          $this->redirect('/users/profile');
+          return redirect('/users/profile');
         }
 
         return response()->json($this->users->showUser($id));
@@ -186,9 +187,12 @@ class UserController extends Controller
       }
 
       $user->update($data);
-
+      
       //return response()->json($user);
-      if(isset($_GET['new']) && $_GET['new'] == 1){
+      if(isset($_GET['new']) && $_GET['new'] == 1) {
+          // on notifie les amis du nouveau membre qu'il peuvent partager des vins avec
+          Event::fire(new NotificateFriendsOfNewRegistration($user->id));
+
           return redirect('/newAccount');
       }
       return redirect('users')->with('status', 'Vos informations ont été mises à jour.');
@@ -205,7 +209,7 @@ class UserController extends Controller
       //var_dump($request->user());
       $user = $request->user();
       if( $user->emailValidate != 1 ) {
-        $this->redirect('/users/profile');
+        return redirect('/users/profile');
       }
 
       // if (Gate::denies('update-user-profile', $user)) {
@@ -270,7 +274,7 @@ class UserController extends Controller
         }
 
         if( $user->emailValidate != 1 ) {
-          $this->redirect('/users/profile');
+          return redirect('/users/profile');
         }
 
         if(!$user->emailValidate) {
@@ -325,6 +329,11 @@ class UserController extends Controller
       $user->payment_iban = $data['payment_iban1'].$data['payment_iban2'].$data['payment_iban3'].$data['payment_iban4'].$data['payment_iban5'].$data['payment_iban6'].$data['payment_iban7'];
       $user->payment_bic = $data['payment_bic'];
       $user->save();
+
+      // Correction d'un bug
+      if( $user->firstname != null && $user->lastname != null && (!isset($user->mangopay_userid) || !isset($user->mangopay_walletid)) )  {
+        Event::fire(new PostRegistration($user->id));
+      }
 
       // Mettre à jour les infos
       //Event::fire(new PaymentInfoWereModified($user->id));
@@ -451,7 +460,7 @@ class UserController extends Controller
             return redirect('/ma-vinoteam/inviter-des-amis')/*->with('errors', 'Email déjà validé. ')*/;
         }
         else{
-            if($user->firstname == null OR $user->lastname == null) {
+            if($user->mangopay_userid == null OR $user->firstname == null OR $user->lastname == null) {
               return redirect('/users/profile');
             }
 

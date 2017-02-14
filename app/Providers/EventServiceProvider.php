@@ -42,9 +42,6 @@ class EventServiceProvider extends ServiceProvider
       'App\Events\VerifyIBAN' => [
           'App\Listeners\VerifyIBANStatus',
       ],
-      'App\Events\CheckPayin' => [
-          'App\Listeners\CronCheckPayin',
-      ],
       'App\Events\PostSuccessPayIn' => [
           'App\Listeners\EmailPostSuccessPayIn',
       ],
@@ -54,8 +51,24 @@ class EventServiceProvider extends ServiceProvider
       'App\Events\PostCreateRelationship' => [
           'App\Listeners\PostCreateRelationshipEmail',
       ],
-      'App\Events\MissingUserMandate' => [
-          'App\Listeners\MissingUserMandateEmail',
+      'App\Events\NotificateFriendsOfNewRegistration' => [
+          'App\Listeners\NotificateFriendsOfNewRegistrationEmail',
+      ],
+      // Gestion des événements CRONs
+      'App\Events\CheckPayin' => [
+          'App\Listeners\CronCheckPayin',
+      ],
+      'App\Events\CronUserUnregistered' => [
+          'App\Listeners\CronUserUnregisteredAction',
+      ],
+      'App\Events\CronUserWithoutTransactions' => [
+          'App\Listeners\CronUserWithoutTransactionsAction',
+      ],
+      'App\Events\CronOwnerWithSingleTransaction' => [
+          'App\Listeners\CronOwnerWithSingleTransactionAction',
+      ],
+      'App\Events\CronBuyerWithSingleTransaction' => [
+          'App\Listeners\CronBuyerWithSingleTransactionAction',
       ],
     ];
 
