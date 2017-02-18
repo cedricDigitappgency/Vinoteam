@@ -129,12 +129,12 @@ active
               <br/>
               <div class="row">
                   <div class="col-md-6">
-                      <p>Les sommes qui transitent par VinoTeam sont totalement s&eacute;curis&eacute;es.<br /> Un remboursement ne peut être effectu&eacute; qu&rsquo; &agrave; l&rsquo;initiative d&rsquo;un membre du groupe et avec l&rsquo;accord de celui auquel il est adress&eacute;.<br /> Il est obligatoire de valider chaque transaction.</p>
+                      <p>Les sommes qui transitent par VinoTeam sont totalement s&eacute;curis&eacute;es.<br /> Un remboursement ne peut &ecirc;tre effectu&eacute; qu&rsquo; &agrave; l&rsquo;initiative d&rsquo;un membre du groupe et avec l&rsquo;accord de celui auquel il est adress&eacute;.<br /> Il est obligatoire de valider chaque transaction.</p>
                       <p>Les plus haut standards de s&eacute;curit&eacute; s&rsquo;appliquent &agrave; toutes les transactions que vous r&eacute;alisez.<br /> Vos coordonn&eacute;es bancaires sont en lieu s&ucirc;r.<br />
-                      <ul>
-                          <li>Elles ne sont pas dans les serveurs VinoTeam.</li>
-                          <li>Elles sont chiffr&eacute;es et conservées &agrave; distance dans un coffre-fort num&eacute;rique.</li>
-                          <li>Vos donn&eacute;es personnelles et bancaires ne sont jamais communiqu&eacute;es, ni aux membres de votre VinoTeam, ni &agrave; aucune autre personne.</li>
+                      <ul class="icons-list">
+                          <li><i class="fa fa-check"></i> Elles ne sont pas dans les serveurs VinoTeam.</li>
+                          <li><i class="fa fa-check"></i> Elles sont chiffr&eacute;es et conserv&eacute;es &agrave; distance dans un coffre-fort num&eacute;rique.</li>
+                          <li><i class="fa fa-check"></i> Vos donn&eacute;es personnelles et bancaires ne sont jamais communiqu&eacute;es, ni aux membres de votre VinoTeam, ni &agrave; aucune autre personne.</li>
                       </ul></p>
                   </div>
                   <img class="col-md-5" src="{{ URL::asset('/images/securite02.jpg') }}">
