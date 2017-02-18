@@ -211,8 +211,8 @@
       'pgsql' =>
       array (
         'driver' => 'pgsql',
-        'host' => '35.187.8.239',
-        'database' => 'vinoteam-sql-2',
+        'host' => '104.155.1.253',
+        'database' => 'vinoteam-sql-1',
         'username' => 'root',
         'password' => '',
         'charset' => 'utf8',
@@ -222,8 +222,8 @@
       'sqlsrv' =>
       array (
         'driver' => 'sqlsrv',
-        'host' => '35.187.8.239',
-        'database' => 'vinoteam-sql-2',
+        'host' => '104.155.1.253',
+        'database' => 'vinoteam-sql-1',
         'username' => 'root',
         'password' => '',
         'charset' => 'utf8',
