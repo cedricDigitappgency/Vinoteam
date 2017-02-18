@@ -42,8 +42,12 @@ class CronUserUnregisteredAction
         $diffJours = $dDiff->days;
         $diffMois = $dDiff->m;
 
+        $dYesterday = new \DateTime("yesterday");
+        $dDiff2 = $dStart->diff($dYesterday);
+        $dDiff2Mois = $dDiff2->m;
+
         // Si la personne n'a pas validé son compte on la relance
-        if($diffJours == 1 || $diffJours == 3 || $diffJours == 7 || $diffJours == 15 || $diffMois == 1 || $diffMois == 2) {
+        if($diffJours == 1 ||  ($dDiff2Mois != $diffMois && ($diffJours == 3 || $diffJours == 7 || $diffJours == 15 || $diffMois == 1 || $diffMois == 2))) {
           Mail::send('emails.notificateUserUnregistered', ['user' => $user, 'diffJours' => $diffJours, 'diffMois' => $diffMois], function($message) use ($user) {
               // From
               $message->from(config('vinoteam.noreplay_email'), config('vinoteam.sitename'));
