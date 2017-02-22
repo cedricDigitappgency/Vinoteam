@@ -187,7 +187,7 @@ class UserController extends Controller
       }
 
       $user->update($data);
-      
+
       //return response()->json($user);
       if(isset($_GET['new']) && $_GET['new'] == 1) {
           // on notifie les amis du nouveau membre qu'il peuvent partager des vins avec
@@ -380,16 +380,16 @@ class UserController extends Controller
                 return;
               }
 
-              Mail::send('emails.postCreateMandate', ['user' => $user, 'url' => $Result->RedirectURL], function($message) use ($user) {
-                  // From
-                  $message->from(config('vinoteam.noreplay_email'), config('vinoteam.sitename'));
-
-                  // To
-                  $message->to($user->email, $user->firstname.' '.$user->lastname);
-
-                  // Subject
-                  $message->subject('Confirmer votre compte bancaire - VinoTeam');
-              });
+              // Mail::send('emails.postCreateMandate', ['user' => $user, 'url' => $Result->RedirectURL], function($message) use ($user) {
+              //     // From
+              //     $message->from(config('vinoteam.noreplay_email'), config('vinoteam.sitename'));
+              //
+              //     // To
+              //     $message->to($user->email, $user->firstname.' '.$user->lastname);
+              //
+              //     // Subject
+              //     $message->subject('Confirmer votre compte bancaire - VinoTeam');
+              // });
           } catch (\MangoPay\Libraries\ResponseException $e) {
               return redirect('users/paymentInfo')->with('alerts', 'Erreur lors de la création du mandat.');
               // \MangoPay\Libraries\Logs::Debug('MangoPay\ResponseException Code', $e->GetCode());
@@ -417,7 +417,11 @@ class UserController extends Controller
       //return response()->json($result);
       if($user->status == 'needactivation') {
         //return redirect('users')->with('errors', 'Pour vérifier vos coordonnés bancaires et en valider l’utilisation pour recevoir ou émettre des remboursements, vous devez cliquer sur le lien de validation qui vient de vous êtes envoyé par email.');
-        return redirect('/bankAccountNotVerified');
+        if($Result && $Result->RedirectURL) {
+          return redirect('/bankAccountNotVerified')->with('url', $Result->RedirectURL);
+        } else {
+          return redirect('/bankAccountNotVerified');
+        }
       }
       if($user->status == 'notverified') {
         return redirect('users')->with('errors', 'Votre moyen de paiement n\'est pas reconnu. Merci de vérifier votre saisie et d\'enregistrer un IBAN valide dans la rubrique "Coordonnées bancaires".');

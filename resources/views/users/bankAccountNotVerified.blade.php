@@ -9,7 +9,7 @@ active
 <div id="container">
 
     <hr/>
-    <p class="exemple">Vérifiez vos coordonnées bancaires</p>
+    <p class="exemple">Valider vos coordonnées bancaires</p>
     <hr/>
 
     <div class="container">
@@ -21,7 +21,9 @@ active
           <div class="col-md-6 col-sm-6">
               <div class="call-action call-action-boxed clearfix">
                     <!-- Call Action Text -->
-                    <h2 class="primary">Pour vérifier vos coordonnés bancaires et en valider l’utilisation pour recevoir ou émettre des remboursements, vous devez cliquer sur le lien de validation qui vient de vous être envoyé par email.</h2>
+                    <!-- <h2 class="primary">Pour vérifier vos coordonnés bancaires et en valider l’utilisation pour recevoir ou émettre des remboursements, vous devez cliquer sur le lien de validation qui vient de vous être envoyé par email.</h2> -->
+                    <h2 class="primary">Pour valider vos coordonnés bancaires, vous devez impérativement <strong>cliquez</strong> sur le bouton "valider" dans les <strong>59 prochaines minutes</strong>.</h2>
+                    @if($url)<p><a href="{{ $url }}" class="btn btn-lg btn-primary"><i class="fa fa-btn fa-check"></i> Valider</a></p>@endif
                      <!-- Call Action Button -->
               </div>
           </div>

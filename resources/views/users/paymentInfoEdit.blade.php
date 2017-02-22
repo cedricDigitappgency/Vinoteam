@@ -115,7 +115,7 @@ function Autotab(box, longueur, texte)
                   <div class="col-md-12 text-center">
                     <input type="hidden" name="parent_id" value="">
                     <button type="submit" class="btn btn-primary">
-                      <i class="fa fa-btn fa-user"></i> Valider
+                      <i class="fa fa-btn fa-user"></i> Suivant
                     </button>
                   </div>
                 </div>
