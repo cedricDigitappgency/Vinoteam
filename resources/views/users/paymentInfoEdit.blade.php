@@ -32,7 +32,7 @@ function Autotab(box, longueur, texte)
     </div>@endif
     @if ($user->status == 'needactivation')<div class="col-md-12">
         <div class="alert alert-warning">
-            Pour vérifier vos coordonnés bancaires et en valider l’utilisation pour recevoir ou émettre des remboursements, vous devez cliquer sur le lien de validation qui vient de vous êtes envoyé par email.
+            Pour vérifier vos coordonnés bancaires et en valider l’utilisation pour recevoir ou émettre des remboursements, vous devez cliquer sur le bouton "suivant".
         </div>
     </div>@endif
     @if (session('alerts'))<div class="col-md-12">
@@ -115,7 +115,7 @@ function Autotab(box, longueur, texte)
                   <div class="col-md-12 text-center">
                     <input type="hidden" name="parent_id" value="">
                     <button type="submit" class="btn btn-primary">
-                      <i class="fa fa-btn fa-user"></i> Suivant
+                      <i class="fa fa-btn fa-arrow-right"></i> Suivant
                     </button>
                   </div>
                 </div>
