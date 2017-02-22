@@ -263,8 +263,8 @@ class UserRepository
 
       $owner_with_once_transactions = array();
       foreach($users as $user) {
-        if(\App\User::find($user->id)) {
-          $owner_with_once_transactions[] = \App\User::find($user->id);
+        if(\App\User::find($user->owner_id)) {
+          $owner_with_once_transactions[] = \App\User::find($user->owner_id);
         }
       }
 
@@ -276,8 +276,8 @@ class UserRepository
 
       $buyer_with_once_transactions = array();
       foreach($users as $user) {
-        if(\App\User::find($user->id)) {
-          $buyer_with_once_transactions[] = \App\User::find($user->id);
+        if(\App\User::find($user->buyer_id)) {
+          $buyer_with_once_transactions[] = \App\User::find($user->buyer_id);
         }
       }
 
