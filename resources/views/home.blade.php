@@ -18,7 +18,7 @@
     <div class="row">
         <div class="col-md-12">
             <p align="center">
-                Bienvenue {{ $user->firstname }} {{ $user->lastname }},<br />
+                Bienvenue {{ $user->firstname }} {{ $user->lastname }},<br /><strong>Invitez</strong> tous vos <strong>amis</strong> à rejoindre votre VinoTeam ! <strong>Partagez</strong> vos <strong>bons plans</strong> et faites des <strong>économies</strong> en achetant du vin à plusieurs !
             </p>
             <p align="center">
                 <img src="{{ URL::asset('/images/vinoteam_animation.gif') }}" alt="VinoTeam" style="height:250px;margin-bottom:20px;">
