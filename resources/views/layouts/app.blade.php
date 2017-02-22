@@ -144,8 +144,8 @@
               <li>
                 <a class="@yield('remboursements')" href="#">Remboursements</a>
                 <ul class="dropdown">
-                  <li><a class="@yield('rmb-amoi')" href="{{ url('/orders/mesdemandesderemboursement') }}">A moi</a></li>
-                  <li><a class="@yield('rmb-amesamis')" href="{{ url('/orders/remboursementsamavinoteam') }}">A ma VinoTeam</a></li>
+                  <li><a class="@yield('rmb-amoi')" href="{{ url('/orders/mesdemandesderemboursement') }}">Demander un remboursement</a></li>
+                  <li><a class="@yield('rmb-amesamis')" href="{{ url('/orders/remboursementsamavinoteam') }}">Rembourser un ami</a></li>
                 </ul>
               </li>
               <li>
@@ -205,8 +205,8 @@
           <li>
             <a class="@yield('remboursements')" href="#">Remboursements</a>
             <ul class="dropdown">
-              <li><a class="@yield('rmb-amoi')" href="{{ url('/orders/mesdemandesderemboursement') }}">A moi</a></li>
-              <li><a class="@yield('rmb-amesamis')" href="{{ url('/orders/remboursementsamavinoteam') }}">A ma VinoTeam</a></li>
+              <li><a class="@yield('rmb-amoi')" href="{{ url('/orders/mesdemandesderemboursement') }}">Demander un remboursement</a></li>
+              <li><a class="@yield('rmb-amesamis')" href="{{ url('/orders/remboursementsamavinoteam') }}">Rembourser un ami</a></li>
             </ul>
           </li>
           <li>
