@@ -781,7 +781,7 @@ class OrderController extends Controller
 
       $order = Order::find($orderId);
 
-      if( $order->status == "paid" || $order->status == "draft" || $order->status == "canceled" ) {
+      if( $order->status == "paid" || $order->status == "draft" || $order->status == "canceled" || $order->status == "inprogress" ) {
         return redirect('orders/mesdemandesderemboursement')->with('errors', 'Vous ne pouvez pas régler cette demande de remboursement.');
       }
 
