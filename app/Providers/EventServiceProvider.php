@@ -15,6 +15,7 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
       'App\Events\PreRegistration' => [
           'App\Listeners\VerifyAccount',
+          'App\Listeners\NotificateVincentNewRegistration',
       ],
       'App\Events\PostRegistration' => [
           'App\Listeners\CreateMangoPayUserAccount',
